@@ -4,7 +4,7 @@ set :application, "xuanjianghui"
 set :scm, "git"
 set :repository,  "git@github.com:yjcqwliu/xuanjianghui.git"
 set :branch, "master"
-set :user, "xuangjianghui"
+set :user, "xuanjianghui"
 set :use_sudo, false
 set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
 

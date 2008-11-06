@@ -1,5 +1,5 @@
 --- 
-cwd: /u/apps/xuangjianghui/current
+cwd: /u/apps/xuanjianghui/current
 log_file: log/mongrel.log
 port: 4200
 environment: production
