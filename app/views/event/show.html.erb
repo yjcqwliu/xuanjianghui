@@ -1,0 +1,179 @@
+<div id="opi" class="page-wrapper clearfix">
+		<div class="full-page-holder">
+			<div class="full-page clearfix">
+				<div class="compatible">
+			<div id="content">
+   
+      <div id="comfirm_diag" class="generic_dialog wallpro_dialog pop_dialog" style=""></div>
+       <div class="grayheader clearfix">
+        <div class="left_side">
+          <h2> 社联生日 </h2>
+        </div>
+      </div>
+      <div id="event" class="clearfix bg_wideline">
+        <!--左边栏-->
+        <div class="left" id="eventDetail">
+          <div class="box">
+            <h3> 活动信息 </h3>
+            
+            <div class="boxcont">
+              <table class="info_table">
+              <tr>
+                  <td class="label"> 活动时间: </td>
+                  <td><div class="datawrap"><%= @activity.start_time %> 至 <%= @activity.end_time %> </div></td>
+                </tr>
+                <tr>
+                  <td class="label"> 活动地点: </td>
+                  <td><div class="datawrap"><%= @activity.act_place %></div></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="box">
+            <h3> 活动介绍 </h3>
+            
+            <div class="boxcont">
+              <div class="description">
+                  
+                 <span id="gut_display"> <%= @activity.act_text.act_description %></span></br>
+                  <span id="to_show_more" ><a id="show_more_link" onclick="show_more_gut();"></br>( 展开详细介绍&gt;&gt;&gt; )</a></span>
+              </div>
+            </div>
+          </div>
+          
+          
+            <div class="box">
+              <h3> 参加这个活动的成员 </h3>
+              <div class="subheader clearfix">
+                <div style="float: left; color: #333333"> <span id="membercount"><%= @activity.join_user.length %></span> 人关注</div>
+                <div style="float: right;"> <a href="/GetMemberList.do?id=22085">查看全部</a> </div>
+              </div>
+              <div class="boxcont">
+                <div id="event_member">
+                  <table class="personIconList">
+                    <tbody>
+                      <tr>
+                           <%
+						   @join_user.each do |xid|
+						   %>
+                          <td class="personInfo"><div class="personIcon"><xn:profile-pic uid="<%= xid %>" linked="true" /></div>
+                            <div class="personName"><xn:name uid="<%= xid %>" linked="true" /></div></td>
+                           <% end %>
+                        
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              
+              </div>
+            </div>
+          
+          <!--  -->
+          
+            
+                <!-- 留言版本开始 -->
+<DIV class="box" id="userTalk">
+              <H3><A
+											href="http://event.xiaonei.com/getmoresubject.do?eventid=22085">所有留言</A>留言板 </H3>
+              
+
+<input type="hidden" value='null'/>
+
+
+              
+               
+                        <FORM method="post" name="subjectForm1" 
+											 >
+                   <DIV id="starttalkForm" style="DISPLAY: block">
+                    
+                    
+                    <textarea tabindex="1" rows="4" cols="100" id="cmtbody"  name="body">非活动成员不能留言</textarea>
+                    
+                       
+                      (每条最多20000字) 
+                  </DIV>
+                </FORM>
+                        
+               
+</DIV></DIV>
+          
+          <!--班级留言结束-->
+          <!--  -->
+
+        <!--/左边栏-->
+        <!--右边栏-->
+        <div class="right" id="eventInfo">
+          <div class="box" id="eventSummary">
+           
+<div class="share-actions">
+	<%= link_to "分享",:controller => :event, :action => :share, :id => @activity.id %>
+</div>
+<input type="hidden" id="link" name="link" value="http://event.xiaonei.com/hostSportEvent.do?id=22085" />
+<input type="hidden" id="type" name="type" value="13" />
+<input type="hidden" id="title" name="title" value="社联生日" />
+<input type="hidden" id="pic" name="pic" value="http://movie.img.xiaonei.com/event/images/s1.png" />
+<input type="hidden" id="fromno" name="fromno" value="225583577" />
+<input type="hidden" id="fromname" name="fromname"  value="聚会" />
+<input type="hidden" id="fromuniv" name="fromuniv"  value="大学生活动中心（东区）" />
+<input type="hidden" id="albumid" name="albumid" value="0" />
+<div id="summary" name="summary" style="display:none">今年11月4日社联迎来了她的三岁生日。</div>
+<input id="largeurl" type="hidden" name="largeurl" value=""/>  
+             
+          </div>
+          <div class="box">
+            <h3> 活动状态</h3>
+            <div class="boxcont">
+               <span id="join22085"
+										
+                style="display:none"
+                >
+                <div class="notice_event">
+                  <h4> <span id="countinterest122085">5</span> 人感兴趣 / <span id="countjoin122085">11</span> 人会参加 </h4>
+                  <h4> 1个好友会参加 </h4>
+                  <h4> 我会参加这个活动 <a href="#nogo" onclick="event_quit(22085,1,1);">我不去了</a> </h4>
+                </div>
+              </span> <span id="intere22085"
+										
+                style="display:none"
+                >
+                <div class="notice_event">
+                  <h4> <span id="countinterest222085">5</span> 人感兴趣 / <span id="countjoin222085">11</span> 人会参加 </h4>
+                  <h4> 1个好友会参加 </h4>
+                  <h4> 我对这个活动感兴趣 </h4>
+                  <a href="#nogo"
+												onclick="event_join(22085,2);">我要参加</a> | <a href="#nogo"
+												onclick="timeoutjoin(22085);event_quit(22085,2);">我不去了</a> </div>
+                </span> <span id="bu22085"
+										
+                style="display:"
+                >
+                <div class="notice_event">
+                  <h4> <span id="countinterest022085"><%= @activity.join_user.length %></span> 人关注 / <span id="countjoin022085"><%= @activity.interest_user.length %></span> 人感兴趣</h4>
+                   <% if @my_activity && @my_activity.join %> 
+				         我已经关注了，<%= link_to "我不想关注了", :controller => :event, :action => :unjoin, :id => @activity.id %>
+				   <% else %>
+					   <%= link_to "我要关注", :controller => :event, :action => :join, :id => @activity.id %> | 
+					   <% if @my_activity && @my_activity.interest %>
+					        <%= link_to "我不感兴趣了", :controller => :event, :action => :uninterest, :id => @activity.id %>
+					   <% else %>
+					        <%= link_to "我感兴趣", :controller => :event, :action => :interest, :id => @activity.id %>
+					   <% end %>
+				   <% end %> 
+                </div>
+                </span> 
+              
+            </div>
+          </div>
+          </div>
+      </div>
+      <!--右边栏-->
+    </div>
+    <!--event结束-->
+   
+  <!--content结束-->
+  
+				</div>
+				
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,44 @@
+<div id="oak" class="gray clearfix">
+						<div id="event_left">
+							<div class="pager-top">
+								<span>共 <strong><%= @activity.length %></strong>
+									个活动</span>
+								
+							</div>
+							
+
+										<%= render(:partial => "partylist", :collection => @activity )%>
+</div>
+<div id="event_right">
+							<h2>
+								条件筛选
+							</h2>
+
+							<form method="post" id="Sea" name="Sea"
+								action="EventHome.do?act=search">
+
+								<input type="hidden" name="network" id="network"
+									value="60008006">
+								<label>
+									活动时间：
+								</label>
+								<select onchange="chgunivright()" name="days" id="days"
+									class="inputtext">
+
+									<option selected="selected"
+										value="7">
+										一周内
+									</option>
+									<option 
+										value="31">
+										一个月内
+									</option>
+									<option 
+										value="93">
+										三个月内
+									</option>
+
+								</select>
+							</form>
+						</div>
+</div>
