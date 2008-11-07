@@ -10,6 +10,19 @@ class HomeController < ApplicationController
 		end
 		#pp "-------current_user.activity#{current_user.activity.inspect}----"
 	end
+	
+	def my
+        @act_location = @current_user.act_location
+        @activity = @current_user.my_activity
+		render :action => :index
+	end
+	
+	def friend
+        @act_location = @current_user.act_location
+        @activity = @current_user.friend_activity
+		render :action => :index
+	end
+	
 	def allcity
         #@act_location = 
 		@activity = Activity.find(:all)

@@ -6,4 +6,5 @@ production:
   host: localhost
   username: root
   password:
+  encoding: utf8
   timeout: 5000
