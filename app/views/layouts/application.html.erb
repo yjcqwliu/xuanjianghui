@@ -1,7 +1,59 @@
+<xn:js-string var="select_city_jstring"> 
+  <b>选择城市</b><br />
+  <select name="select" id="select_city">
+    <option value="北京">北京</option>
+    <option value="长春">长春</option>
+    <option value="长沙">长沙</option>
+    <option value="成都">成都</option>
+    <option value="长春">长春</option>
+    <option value="重庆">重庆</option>
+    <option value="大连">大连</option>
+    <option value="广州">广州</option>
+    <option value="杭州">杭州</option>
+    <option value="哈尔滨">哈尔滨</option>
+    <option value="合肥">合肥</option>
+    <option value="济南">济南</option>
+    <option value="昆明">昆明</option>
+    <option value="南京">南京</option>
+    <option value="青岛">青岛</option>
+    <option value="上海">上海</option>
+    <option value="沈阳">沈阳</option>
+    <option value="深圳">深圳</option>
+    <option value="苏州">苏州</option>
+    <option value="天津">天津</option>
+    <option value="武汉">武汉</option>
+    <option value="厦门">厦门</option>
+    <option value="西安">西安</option>
+  </select>
+</xn:js-string>
 <script type="text/javascript">
-function goto_url(url)
-{
-    location.href=url;
+
+function seeOtherCity(){   //选择查看其他城市
+    var city_dialog;	
+	function go_url_callback(){
+       var city = document.getElementById('select_city').getValue();
+       document.setLocation('/<%= ENV['XIAONEI_RELATIVE_URL_ROOT'] %>?location=' + encodeURIComponent(city));
+    }
+	if (!seeOtherCity.city_dialog) {
+	 city_dialog = seeOtherCity.city_dialog =
+	     new Dialog(Dialog.DIALOG_PANEL, {
+	     body: select_city_jstring,
+	     header: '选择你想查看的城市'
+	   }
+	 );
+	
+	 var button1 = new Button('确定', go_url_callback);
+	 city_dialog.addFooter(button1);
+	}
+	else {
+		city_dialog = seeOtherCity.city_dialog;
+	}
+    
+    city_dialog.show();
+}
+function chgunivright(){
+    var time_select= document.getElementById('select_days').getValue();
+    document.setLocation('/<%= ENV['XIAONEI_RELATIVE_URL_ROOT'] %>?location=' + encodeURIComponent('<%= @act_location %>') + '&keywords=' + encodeURIComponent('<%= @keywords %>') + '&time_select=' + time_select);
 }
 </script>
 <style type="text/css">
@@ -10,9 +62,9 @@ function goto_url(url)
 }
 .grayheader .left_side{
 	float: left;
-	width: 600px;
+	width: 400px;
 }
-.grayheader .left_side p{ padding:5px 0}
+.grayheader .left_side p{ padding:2px 0}
 .grayheader .right_side{
 	float:right;
 	width:200px;
@@ -35,7 +87,7 @@ line-height:20px;
 	padding:0 10px;
 }
 #event .left{
-	float: left;padding:30pt 10px;width:580px; _display: inline;
+	float: left;padding:10px 10px;width:540px; _display: inline;
 }
 #event .right{
 	float: right; width: 200px; margin-right: 5px; _display: inline;_margin-right:0px;
@@ -653,42 +705,6 @@ padding:2px;
 </style>
 <div class="event_top_block clearfix"><span id="pipe"><%= link_to "宣讲会",:controller => :home, :action => :index %> | <%= link_to "我关注的宣讲会",:controller => :home, :action => :my %> | <%= link_to "好友关注的宣讲会",:controller => :home, :action => :friend %></span><span class="help"><a href="#">帮助</a></span>
 </div>
-<div class="event_header_block clearfix">
-  <h2 class="event_header"><%= @act_location %> <a onclick="seeOtherCity();" href="#">查看其它城市的活动</a> </h2>
- <div class="event_search">
-						<form method="get" action="home">
-
-							<input type="hidden" value="searchEvent" name="d" />
-							<input type="text" autocomplete="off" id="keywords"
-								name="keywords" class="search_event" value="搜索活动名称"
-								onblur="(this.value==''?this.value='搜索活动名称':this.value)"
-								onfocus="if (this.value=='搜索活动名称'){this.value='';}" />
-							<input name="" type="image" class="search_new_btn"
-								src="http://event.xiaonei.com/img/search_new_btn.gif" align="absmiddle"
-								style="margin:-1px 0 0 -5px" />
-						</form>
-					</div>
-</div>
-<div style="position:relative;">
-<div id="sub-nav" style="position:relative;">
-						<ul>
-							<li
-								class="selected">
-								<a href="#" ><%= @act_location %></a>
-							</li>
-							
-							<li
-								>
-								<div class="event_nav_drop">
-									<%= link_to "全部城市", {:controller => :home, :action => :allcity},:id => "event_drop", :class => "event_nav_link"%>
-								</div>
-
-							</li>
-							
-						</ul>
-
-					</div>
 <div id="yield">
 <%= yield -%>
-</div>
 </div>

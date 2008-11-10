@@ -92,11 +92,12 @@ ActiveRecord::Schema.define(:version => 20081102085340) do
     t.boolean  "join"
     t.boolean  "interest"
     t.boolean  "share"
+    t.string   "share_content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "sns_my_activities", ["sns_user_id"], :name => "index_sns_my_activities_on_sns_user_id"
+  add_index "sns_my_activities", ["sns_user_id", "activity_id", "join"], :name => "index_sns_my_activities_on_sns_user_id_and_activity_id_and_join"
   add_index "sns_my_activities", ["activity_id"], :name => "index_sns_my_activities_on_activity_id"
 
   create_table "sns_users", :force => true do |t|

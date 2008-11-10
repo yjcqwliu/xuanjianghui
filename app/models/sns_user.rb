@@ -1,6 +1,17 @@
 class SnsUser < ActiveRecord::Base
     serialize :friend_ids
-	has_many :sns_my_activity,:order => 'id desc ' 
+	has_many :sns_my_activity
+	has_many :activity, :through => :sns_my_activity, :order => 'id desc '  do
+	    def joined
+		     find(:all,:conditions => ["  start_time > ? ", Time.now],:order => "start_time ASC")
+		end
+		def starting
+		     find(:all,:conditions => ["  start_time > ? and end_time < ?  ", Time.now, Time.now],:order => "start_time ASC")
+		end
+		def timeout
+		     find(:all,:conditions => ["  end_time < ? ", Time.now],:order => "start_time ASC")
+		end
+	end
 	
 	def self.find_by_xid(t_xid)
 	    t_u = SnsUser.find(:first,:conditions => [" xid = ?",t_xid.to_s])
@@ -10,40 +21,10 @@ class SnsUser < ActiveRecord::Base
 		   t_u = SnsUser.create({:xid => t_xid})
 		end
 	end
-    def xn_session #µ÷ÓÃÐ£ÄÚAPI
+    def xn_session #è°ƒç”¨æ ¡å†…API
 		@xn_session ||= Xiaonei::Session.new("xn_sig_session_key" => session_key, "xn_sig_user" => xid)
 	end
-	def location_activity(conditionstr = nil)
-	    act ||= Activity.find(:all,:conditions => [" act_location = ? #{conditionstr}",act_location], :order => " updated_on DESC")
-	end
-	def my_activity    #»ñÈ¡µ±Ç°ÓÃ»§ÒÑ¾­¹Ø×¢µÄÐû½²»áÐÅÏ¢£¬·µ»ØActivityÊý×é
-	    tmp_activity = []
-		sns_my_activity.each do |a|
-		      if a.join 
-				  tmp_act = Activity.find(:first,:conditions => [" id = ?",a.activity_id])
-					 tmp_activity << tmp_act if tmp_act
-			  end
-		end
-		tmp_activity
-	end
-	def friend_activity  #»ñÈ¡µ±Ç°ÓÃ»§ºÃÓÑÒÑ¾­¹Ø×¢µÄÐû½²»áÐÅÏ¢£¬·µ»ØActivityÊý×é
-	    tmp_activity = []
-		my_friend_ids = []
-		SnsUser.find(:all,:conditions => [" xid in (?) ",friend_ids] ).each do |u|
-		    my_friend_ids << u.id
-		end
-		pp("-----my_friend_ids:#{my_friend_ids.inspect}--------")
-		friend_join_activity = SnsMyActivity.find(:all,:conditions => [" sns_user_id in (?)",my_friend_ids])
-		pp("-----friend_join_activity:#{friend_join_activity.inspect}--------")
-		friend_join_activity.each do |a|
-		      if a.join 
-				  tmp_act = Activity.find(:first,:conditions => [" id = ?",a.activity_id])
-				  tmp_activity << tmp_act if tmp_act
-			  end
-		end
-		tmp_activity
-	end
-	def my_activity_find_by_id(act_id)  #»ñÈ¡¸ÃºÃÓÑÓë´«ÈëµÄid¶ÔÓ¦activity±íÖÐ¼ÇÂ¼Ö®¼äµÄ¹ØÏµ
+	def my_activity_find_by_id(act_id)  #èŽ·å–è¯¥å¥½å‹ä¸Žä¼ å…¥çš„idå¯¹åº”activityè¡¨ä¸­è®°å½•ä¹‹é—´çš„å…³ç³»
 	    tmp_my_activity = nil
 	    sns_my_activity.each do |m|
 		    if m.activity_id.to_i == act_id.to_i

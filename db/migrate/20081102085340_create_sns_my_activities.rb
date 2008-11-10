@@ -6,10 +6,11 @@ class CreateSnsMyActivities < ActiveRecord::Migration
 	  t.boolean :join
 	  t.boolean :interest
 	  t.boolean :share
+	  t.string :share_content
 
       t.timestamps
     end
-	add_index :sns_my_activities, :sns_user_id
+	add_index :sns_my_activities, [:sns_user_id, :activity_id, :join]
 	add_index :sns_my_activities, :activity_id
   end
 

@@ -1,6 +1,7 @@
 class Activity < ActiveRecord::Base
     has_one :act_text
 	has_many :sns_my_activity
+	has_many :users, :through => :sns_my_activity
 	def interest_user
 	    tmp_user = []
 		sns_my_activity.each do |u|
