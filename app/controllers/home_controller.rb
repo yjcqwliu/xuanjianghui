@@ -2,7 +2,7 @@ class HomeController < ApplicationController
 	before_filter :check_network, :except => [:network,:save_network]
 	def index
         @act_location = params[:location] || @current_user.act_location
-		@time_select = params[:time_select] || 7  #默认情况下显示最近7天内将要举行的活
+		@time_select = params[:time_select] || 93  #默认情况下显示最近7天内将要举行的活
 		@keywords = params[:keywords] || nil
 		@activity = find_location_in_activity({:act_location => @act_location, :time_select => @time_select, :keywords => @keywords})
 		
