@@ -45,4 +45,21 @@ class SnsUser < ActiveRecord::Base
 			@friend_id_in_sns_user
 		end
 	end
-end
+	def friend_activity  
+		tmp_activity = []
+		my_friend_ids = []
+		SnsUser.find(:all,:conditions => [" xid in (?) ",friend_ids] ).each do |u|
+			my_friend_ids << u.id
+		end
+		pp("-----my_friend_ids:#{my_friend_ids.inspect}--------")
+		friend_join_activity = SnsMyActivity.find(:all,:conditions => [" sns_user_id in (?)",my_friend_ids])
+		pp("-----friend_join_activity:#{friend_join_activity.inspect}--------")
+		friend_join_activity.each do |a|
+			if a.join
+				tmp_act = Activity.find(:first,:conditions => [" id = ?",a.activity_id])
+				tmp_activity << tmp_act if tmp_act and !tmp_activity.include?(tmp_act)
+			end
+		end
+		tmp_activity
+	end
+end 

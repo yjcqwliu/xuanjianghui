@@ -1,6 +1,5 @@
 <OL id="talk">
-                    <%if commit
-					 commit.each do |m| %>
+                    <% commit.each do |m| %>
                       <LI id="ev<%= m.id %>">
                         
                         <DIV class="article"
@@ -27,6 +26,5 @@
                         </DIV>
                       </li>
                       
-                    <% end 
-					end %>
+                    <% end %>
                   </OL>  

@@ -26,7 +26,7 @@ class HomeController < ApplicationController
 	
 	def friend
         @act_location = @current_user.act_location
-        @activity = @current_user.activity.find(:all,:conditions => [" user_id in (?) and start_time > ? ", @current_user.friend_id_in_sns_user, Time.now ], :order => "start_time ASC")
+        @activity = @current_user.friend_activity
 		render :action => :index
 	end
 	
