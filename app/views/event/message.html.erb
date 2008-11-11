@@ -1,0 +1,33 @@
+<div id="content">
+				<div id="toc">
+					<p class="status">
+						(共
+						<span class="count"><%= @message.length %></span>留言)
+					</p>
+					<p class="crumbs">
+						<%= link_to @activity.act_subject, :controller => :event, :action => :show, :id => @activity.id %><span
+							class="pipe"> / </span>留言列表
+					</p>
+				</div>
+</div>
+<DIV class="box" id="userTalk">
+              <H3><span style="float:right"><%= link_to "所有留言", {:controller => :event, :action => :message, :id => @activity.id },:name => "message"%></span>留言板 </H3>
+              
+
+<input type="hidden" value='null'/>
+
+
+              
+               
+                        <FORM method="post" name="subjectForm1"  action="event/save_message">
+                   <DIV id="starttalkForm" style="DISPLAY: block">
+                    
+                    <input type="hidden" name="commit[reply_xid]"  id="commit[reply_xid]" value="" /> 
+				    <input type="hidden" name="commit[activity_id]" value="<%= @activity.id %>" /> 
+                    <textarea tabindex="1" rows="4" cols="100" id="commit[content]" name="commit[content]"></textarea>
+					<input type="submit" class="inputbutton" value="留言" />
+                  </DIV>
+                </FORM>
+		<%= render(:partial => "commit", :object => @message ) %>
+                  
+</DIV>

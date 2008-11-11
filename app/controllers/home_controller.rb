@@ -26,7 +26,7 @@ class HomeController < ApplicationController
 	
 	def friend
         @act_location = @current_user.act_location
-        @activity = @current_user.activity.find(:all,:conditions => [" user_id in (?) and start_time > ? ", @current_user.friend_ids, Time.now ], :order => "start_time ASC")
+        @activity = @current_user.activity.find(:all,:conditions => [" user_id in (?) and start_time > ? ", @current_user.friend_id_in_sns_user, Time.now ], :order => "start_time ASC")
 		render :action => :index
 	end
 	
@@ -40,7 +40,6 @@ class HomeController < ApplicationController
 	end
 	def save_network
 	    begin
-		    pp("------------params[:city]:#{params[:city]}------")
 		    @current_user.act_location = params[:city]
 			@current_user.save
 			xn_redirect_to("home/index")

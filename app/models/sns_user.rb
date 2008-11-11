@@ -34,4 +34,15 @@ class SnsUser < ActiveRecord::Base
 		end
 		tmp_my_activity
 	end
+	def friend_id_in_sns_user
+	    if @friend_id_in_sns_user
+			@friend_id_in_sns_user
+		else
+			@friend_id_in_sns_user = []
+			SnsUser.find(:all,:conditions => [" xid in (?) ",friend_ids],:select => "id").each do |s|
+			@friend_id_in_sns_user << s.id
+			end 
+			@friend_id_in_sns_user
+		end
+	end
 end

@@ -55,6 +55,13 @@ function chgunivright(){
     var time_select= document.getElementById('select_days').getValue();
     document.setLocation('/<%= ENV['XIAONEI_RELATIVE_URL_ROOT'] %>?location=' + encodeURIComponent('<%= @act_location %>') + '&keywords=' + encodeURIComponent('<%= @keywords %>') + '&time_select=' + time_select);
 }
+function reply_message(xid,commit_id){
+	document.getElementById('commit[reply_xid]').setValue(xid);
+	
+	//rname = document.getElementById('message'+commit_id).getValue();
+	//new Dialog(Dialog.DIALOG_ALERT, 'message'+commit_id, rname);
+	//document.getElementById('commit[content]').setValue("回复"+rname+"：");
+}
 </script>
 <style type="text/css">
 .grayheader{
@@ -702,6 +709,7 @@ padding:2px;
 #sub-nav .selected a {border-style: solid;border-color: #3B5888 #5973A9;border-width: 1px 1px 0;color: #FFF;background: #6D84B4;}
 #sub-nav .snav {padding: 0 0 5px;float: left;}
 #sub-nav .pagerpro-title {padding: 0 0 5px;float: left;}
+.author{float:left;}
 </style>
 <div class="event_top_block clearfix"><span id="pipe"><%= link_to "宣讲会",:controller => :home, :action => :index %> | <%= link_to "我关注的宣讲会",:controller => :home, :action => :my %> | <%= link_to "好友关注的宣讲会",:controller => :home, :action => :friend %></span><span class="help"><a href="#">帮助</a></span>
 </div>

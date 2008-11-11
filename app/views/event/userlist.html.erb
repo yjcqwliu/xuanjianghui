@@ -1,0 +1,13 @@
+<div id="content">
+				<div id="toc">
+					<p class="status">
+						(共
+						<span class="count"><%= @userlist.length %></span>人)
+					</p>
+					<p class="crumbs">
+						<%= link_to @activity.act_subject, :controller => :event, :action => :show, :id => @activity.id %><span
+							class="pipe"> / </span>成员列表
+					</p>
+				</div>
+</div>
+<%= render(:partial => "user", :collection => @userlist ) %>

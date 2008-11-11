@@ -45,7 +45,7 @@
               <h3> 参加这个活动的成员 </h3>
               <div class="subheader clearfix">
                 <div style="float: left; color: #333333"> <span id="membercount"><%= @activity.join_user.length %></span> 人关注</div>
-                <div style="float: right;"> <a href="/GetMemberList.do?id=22085">查看全部</a> </div>
+                <div style="float: right;"><%= link_to "查看全部", :controller => :event ,:action => :userlist, :id => @activity.id %> </div>
               </div>
               <div class="boxcont">
                 <div id="event_member">
@@ -72,8 +72,7 @@
             
                 <!-- 留言版本开始 -->
 <DIV class="box" id="userTalk">
-              <H3><A
-											href="http://event.xiaonei.com/getmoresubject.do?eventid=22085">所有留言</A>留言板 </H3>
+              <H3><span style="float:right"><%= link_to "所有留言", {:controller => :event, :action => :message, :id => @activity.id },:name => "message"%></span>留言板 </H3>
               
 
 <input type="hidden" value='null'/>
@@ -81,19 +80,17 @@
 
               
                
-                        <FORM method="post" name="subjectForm1" 
-											 >
+                        <FORM method="post" name="subjectForm1"  action="event/save_message">
                    <DIV id="starttalkForm" style="DISPLAY: block">
                     
-                    
-                    <textarea tabindex="1" rows="4" cols="100" id="cmtbody"  name="body">非活动成员不能留言</textarea>
-                    
-                       
-                      (每条最多20000字) 
+                    <input type="hidden" name="commit[reply_xid]"  id="commit[reply_xid]" value="" /> 
+				    <input type="hidden" name="commit[activity_id]" value="<%= @activity.id %>" /> 
+                    <textarea tabindex="1" rows="4" cols="100" id="commit[content]" name="commit[content]"></textarea>
+					<input type="submit" class="inputbutton" value="留言" />
                   </DIV>
                 </FORM>
-                        
-               
+		<%= render(:partial => "commit", :object => @message ) %>
+                  
 </DIV></DIV>
           
           <!--班级留言结束-->
@@ -107,42 +104,12 @@
 <div class="share-actions">
 	<%= link_to "分享",:controller => :event, :action => :share, :id => @activity.id %>
 </div>
-<input type="hidden" id="link" name="link" value="http://event.xiaonei.com/hostSportEvent.do?id=22085" />
-<input type="hidden" id="type" name="type" value="13" />
-<input type="hidden" id="title" name="title" value="社联生日" />
-<input type="hidden" id="pic" name="pic" value="http://movie.img.xiaonei.com/event/images/s1.png" />
-<input type="hidden" id="fromno" name="fromno" value="225583577" />
-<input type="hidden" id="fromname" name="fromname"  value="聚会" />
-<input type="hidden" id="fromuniv" name="fromuniv"  value="大学生活动中心（东区）" />
-<input type="hidden" id="albumid" name="albumid" value="0" />
-<div id="summary" name="summary" style="display:none">今年11月4日社联迎来了她的三岁生日。</div>
-<input id="largeurl" type="hidden" name="largeurl" value=""/>  
              
           </div>
           <div class="box">
             <h3> 活动状态</h3>
             <div class="boxcont">
-               <span id="join22085"
-										
-                style="display:none"
-                >
-                <div class="notice_event">
-                  <h4> <span id="countinterest122085">5</span> 人感兴趣 / <span id="countjoin122085">11</span> 人会参加 </h4>
-                  <h4> 1个好友会参加 </h4>
-                  <h4> 我会参加这个活动 <a href="#nogo" onclick="event_quit(22085,1,1);">我不去了</a> </h4>
-                </div>
-              </span> <span id="intere22085"
-										
-                style="display:none"
-                >
-                <div class="notice_event">
-                  <h4> <span id="countinterest222085">5</span> 人感兴趣 / <span id="countjoin222085">11</span> 人会参加 </h4>
-                  <h4> 1个好友会参加 </h4>
-                  <h4> 我对这个活动感兴趣 </h4>
-                  <a href="#nogo"
-												onclick="event_join(22085,2);">我要参加</a> | <a href="#nogo"
-												onclick="timeoutjoin(22085);event_quit(22085,2);">我不去了</a> </div>
-                </span> <span id="bu22085"
+               <span id="bu22085"
 										
                 style="display:"
                 >

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081102085340) do
+ActiveRecord::Schema.define(:version => 20081110155537) do
 
   create_table "act_texts", :force => true do |t|
     t.integer "activity_id"
@@ -85,6 +85,20 @@ ActiveRecord::Schema.define(:version => 20081102085340) do
 
   add_index "mail_remindings", ["activity_id"], :name => "index_mail_remindings_on_activity_id"
   add_index "mail_remindings", ["user_id"], :name => "index_mail_remindings_on_user_id"
+
+  create_table "sns_commits", :force => true do |t|
+    t.integer  "sns_user_xid"
+    t.integer  "activity_id"
+    t.text     "content"
+    t.integer  "reply_xid"
+    t.boolean  "sented"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sns_commits", ["sns_user_xid"], :name => "index_sns_commits_on_sns_user_xid"
+  add_index "sns_commits", ["activity_id"], :name => "index_sns_commits_on_activity_id"
+  add_index "sns_commits", ["updated_at"], :name => "index_sns_commits_on_updated_at"
 
   create_table "sns_my_activities", :force => true do |t|
     t.integer  "sns_user_id"
