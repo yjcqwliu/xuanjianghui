@@ -5,34 +5,45 @@ class HomeController < ApplicationController
 		@time_select = params[:time_select] || 93  #默认情况下显示最近7天内将要举行的活
 		@keywords = params[:keywords] || nil
 		@activity = find_location_in_activity({:act_location => @act_location, :time_select => @time_select, :keywords => @keywords})
-		
+		@page = params[:page] || 1
+		@activity = @activity.paginate(:page => @page, :per_page => 20)
 		#pp "-------current_user.activity#{current_user.activity.inspect}----"
 	end
 	
 	def my
         @activity = @current_user.activity.joined
+		@page = params[:page] || 1
+		@activity = @activity.paginate(:page => @page, :per_page => 20)
 		render :action => :my
 	end
 	
 	def my_start
 	    @activity = @current_user.activity.starting
+		@page = params[:page] || 1
+		@activity = @activity.paginate(:page => @page, :per_page => 20)
 		render :action => :my
 	end
 	
 	def my_timeout
 	    @activity = @current_user.activity.timeout
+		@page = params[:page] || 1
+		@activity = @activity.paginate(:page => @page, :per_page => 20)
 		render :action => :my
 	end
 	
 	def friend
         @act_location = @current_user.act_location
         @activity = @current_user.friend_activity
+		@page = params[:page] || 1
+		@activity = @activity.paginate(:page => @page, :per_page => 20)
 		render :action => :index
 	end
 	
 	def allcity
         @act_location = @current_user.act_location
 		@activity = find_location_in_activity({:time_select => @time_select, :keywords => @keywords})
+		@page = params[:page] || 1
+		@activity = @activity.paginate(:page => @page, :per_page => 20)
 		render :action => :index
 	end
 	def network
@@ -67,7 +78,7 @@ class HomeController < ApplicationController
 		       tmp_arr[0] += " and start_time < ? "
                tmp_arr << Time.now + tmp_params[:time_select].to_i.day
 		   end	
-		   pp "-----------------tmp_arr:#{tmp_arr.inspect}--------------"
+		   #pp "-----------------tmp_arr:#{tmp_arr.inspect}--------------"
 		   @loc_activity = Activity.find(:all,:conditions => tmp_arr, :order => " start_time ASC")
 	end
 

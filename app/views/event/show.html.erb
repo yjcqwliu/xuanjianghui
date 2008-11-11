@@ -34,8 +34,8 @@
             <div class="boxcont">
               <div class="description">
                   
-                 <span id="gut_display"> <% if @activity.act_text %><%= @activity.act_text.act_description %><% end %></span></br>
-                  <span id="to_show_more" ></span>
+                 <span id="gut_display"> <% if @activity.act_text %><%= truncate(@activity.act_text.act_description.chars.gsub("\n","<br>"),400)%><% end %></span></br>
+                  <span id="to_show_more" ><a href="http://www.iease.com.cn/events/<%= @activity.id %>" target="_blank">查看详情</a></span>
               </div>
             </div>
           </div>

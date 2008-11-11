@@ -20,12 +20,16 @@ class EventController < ApplicationController
 			@activity = Activity.find(id)
 		    @userlist = @activity.sns_user
 		end
+		@page = params[:page] || 1
+		@userlist = @userlist.paginate(:page => @page, :per_page => 20)
 	end
 	def message
 	    if id = params[:id]
 			@activity = Activity.find(id)
 		    @message = @activity.sns_commit
 		end
+		@page = params[:page] || 1
+		@message = @message.paginate(:page => @page, :per_page => 10)
 	end
 	def save_message
 	    commit = params[:commit]
@@ -56,6 +60,10 @@ class EventController < ApplicationController
 			  else   
 			       @current_user.sns_my_activity.create(:activity_id =>id,:join => true)
 			  end
+			  @activity = Activity.find(id)
+			  if !MailReminding.find(:first,:conditions =>["activity_id = ? and user_id =?",id, @current_user.id])  #如果邮件提醒中没有该信息则添加
+			   	MailReminding.create(:activity_id => id,:title => @activity.act_subject, :user_id => @current_user.id)
+			  end
 		end
 		xn_redirect_to("event/show/#{id}")
 	end
@@ -78,6 +86,8 @@ class EventController < ApplicationController
 			       my_activity.join = false
 				   my_activity.save
 			  end
+			  m = MailReminding.find(:first,:conditions =>["activity_id = ? and user_id =?",id, @current_user.id])
+			  m.destroy
 		end
 		xn_redirect_to("event/show/#{id}")
 	end

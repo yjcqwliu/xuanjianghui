@@ -1,6 +1,7 @@
 class SnsUser < ActiveRecord::Base
     serialize :friend_ids
 	has_many :sns_my_activity
+	has_many :mail_reminding
 	has_many :activity, :through => :sns_my_activity, :order => 'id desc '  do
 	    def joined
 		     find(:all,:conditions => ["  start_time > ? ", Time.now],:order => "start_time ASC")
@@ -47,11 +48,7 @@ class SnsUser < ActiveRecord::Base
 	end
 	def friend_activity  
 		tmp_activity = []
-		my_friend_ids = []
-		SnsUser.find(:all,:conditions => [" xid in (?) ",friend_ids] ).each do |u|
-			my_friend_ids << u.id
-		end
-		pp("-----my_friend_ids:#{my_friend_ids.inspect}--------")
+		my_friend_ids = friend_id_in_sns_user
 		friend_join_activity = SnsMyActivity.find(:all,:conditions => [" sns_user_id in (?)",my_friend_ids])
 		pp("-----friend_join_activity:#{friend_join_activity.inspect}--------")
 		friend_join_activity.each do |a|

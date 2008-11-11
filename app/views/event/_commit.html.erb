@@ -1,5 +1,9 @@
 <OL id="talk">
-                    <% commit.each do |m| %>
+                    <%
+					 i = 0
+					 commit.each do |m| 
+					 i += 1
+					 %>
                       <LI id="ev<%= m.id %>">
                         
                         <DIV class="article"
@@ -26,5 +30,9 @@
                         </DIV>
                       </li>
                       
-                    <% end %>
+                    <%
+					if controller.action_name == "show" and i == 10
+						break
+					end
+					 end %>
                   </OL>  
