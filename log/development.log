@@ -1,0 +1,64 @@
+  [4;36;1mSQL (0.000000)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSnsMyActivity Load (0.000000)[0m   [0;1mSELECT * FROM `sns_my_activities` WHERE ( share = true ) ORDER BY updated_at desc LIMIT 5000[0m
+  [4;35;1mSnsMyActivity Columns (0.000000)[0m   [0mSHOW FIELDS FROM `sns_my_activities`[0m
+  [4;36;1mActivity Columns (0.000000)[0m   [0;1mSHOW FIELDS FROM `activities`[0m
+  [4;35;1mActivity Load (0.000000)[0m   [0mSELECT * FROM `activities` WHERE (`activities`.`id` = 441195) [0m
+  [4;36;1mActText Load (0.000000)[0m   [0;1mSELECT * FROM `act_texts` WHERE (`act_texts`.activity_id = 441195) LIMIT 1[0m
+  [4;35;1mActText Columns (0.000000)[0m   [0mSHOW FIELDS FROM `act_texts`[0m
+  [4;36;1mSnsUser Columns (0.000000)[0m   [0;1mSHOW FIELDS FROM `sns_users`[0m
+  [4;35;1mSnsUser Load (0.000000)[0m   [0mSELECT * FROM `sns_users` WHERE (`sns_users`.`id` = 4) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mBEGIN[0m
+  [4;35;1mSnsMyActivity Update (0.000000)[0m   [0mUPDATE `sns_my_activities` SET `share` = 0, `updated_at` = '2008-11-12 07:40:26' WHERE `id` = 8[0m
+  [4;36;1mSQL (0.047000)[0m   [0;1mCOMMIT[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSnsMyActivity Load (0.016000)[0m   [0;1mSELECT * FROM `sns_my_activities` WHERE ( share = true ) ORDER BY updated_at desc LIMIT 5000[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSnsMyActivity Load (0.000000)[0m   [0;1mSELECT * FROM `sns_my_activities` WHERE ( share = true ) ORDER BY updated_at desc LIMIT 5000[0m
+  [4;35;1mSnsMyActivity Columns (0.000000)[0m   [0mSHOW FIELDS FROM `sns_my_activities`[0m
+  [4;36;1mActivity Columns (0.015000)[0m   [0;1mSHOW FIELDS FROM `activities`[0m
+  [4;35;1mActivity Load (0.000000)[0m   [0mSELECT * FROM `activities` WHERE (`activities`.`id` = 441195) [0m
+  [4;36;1mActText Load (0.000000)[0m   [0;1mSELECT * FROM `act_texts` WHERE (`act_texts`.activity_id = 441195) LIMIT 1[0m
+  [4;35;1mActText Columns (0.000000)[0m   [0mSHOW FIELDS FROM `act_texts`[0m
+  [4;36;1mSnsUser Columns (0.000000)[0m   [0;1mSHOW FIELDS FROM `sns_users`[0m
+  [4;35;1mSnsUser Load (0.000000)[0m   [0mSELECT * FROM `sns_users` WHERE (`sns_users`.`id` = 4) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSnsMyActivity Load (0.000000)[0m   [0;1mSELECT * FROM `sns_my_activities` WHERE ( share = true ) ORDER BY updated_at desc LIMIT 5000[0m
+  [4;35;1mSnsMyActivity Columns (0.000000)[0m   [0mSHOW FIELDS FROM `sns_my_activities`[0m
+  [4;36;1mActivity Columns (0.016000)[0m   [0;1mSHOW FIELDS FROM `activities`[0m
+  [4;35;1mActivity Load (0.000000)[0m   [0mSELECT * FROM `activities` WHERE (`activities`.`id` = 441195) [0m
+  [4;36;1mActText Load (0.000000)[0m   [0;1mSELECT * FROM `act_texts` WHERE (`act_texts`.activity_id = 441195) LIMIT 1[0m
+  [4;35;1mActText Columns (0.000000)[0m   [0mSHOW FIELDS FROM `act_texts`[0m
+  [4;36;1mSnsUser Columns (0.000000)[0m   [0;1mSHOW FIELDS FROM `sns_users`[0m
+  [4;35;1mSnsUser Load (0.016000)[0m   [0mSELECT * FROM `sns_users` WHERE (`sns_users`.`id` = 4) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSnsMyActivity Load (0.000000)[0m   [0;1mSELECT * FROM `sns_my_activities` WHERE ( share = true ) ORDER BY updated_at desc LIMIT 5000[0m
+  [4;35;1mSnsMyActivity Columns (0.000000)[0m   [0mSHOW FIELDS FROM `sns_my_activities`[0m
+  [4;36;1mActivity Columns (0.016000)[0m   [0;1mSHOW FIELDS FROM `activities`[0m
+  [4;35;1mActivity Load (0.000000)[0m   [0mSELECT * FROM `activities` WHERE (`activities`.`id` = 441195) [0m
+  [4;36;1mActText Load (0.000000)[0m   [0;1mSELECT * FROM `act_texts` WHERE (`act_texts`.activity_id = 441195) LIMIT 1[0m
+  [4;35;1mActText Columns (0.015000)[0m   [0mSHOW FIELDS FROM `act_texts`[0m
+  [4;36;1mSnsUser Columns (0.016000)[0m   [0;1mSHOW FIELDS FROM `sns_users`[0m
+  [4;35;1mSnsUser Load (0.000000)[0m   [0mSELECT * FROM `sns_users` WHERE (`sns_users`.`id` = 4) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSnsMyActivity Load (0.000000)[0m   [0;1mSELECT * FROM `sns_my_activities` WHERE ( share = true ) ORDER BY updated_at desc LIMIT 5000[0m
+  [4;35;1mSnsMyActivity Columns (0.000000)[0m   [0mSHOW FIELDS FROM `sns_my_activities`[0m
+  [4;36;1mActivity Columns (0.000000)[0m   [0;1mSHOW FIELDS FROM `activities`[0m
+  [4;35;1mActivity Load (0.000000)[0m   [0mSELECT * FROM `activities` WHERE (`activities`.`id` = 441195) [0m
+  [4;36;1mActText Load (0.000000)[0m   [0;1mSELECT * FROM `act_texts` WHERE (`act_texts`.activity_id = 441195) LIMIT 1[0m
+  [4;35;1mActText Columns (0.000000)[0m   [0mSHOW FIELDS FROM `act_texts`[0m
+  [4;36;1mSnsUser Columns (0.000000)[0m   [0;1mSHOW FIELDS FROM `sns_users`[0m
+  [4;35;1mSnsUser Load (0.000000)[0m   [0mSELECT * FROM `sns_users` WHERE (`sns_users`.`id` = 4) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCOMMIT[0m

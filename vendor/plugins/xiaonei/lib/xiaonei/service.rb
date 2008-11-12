@@ -2,7 +2,7 @@ require 'net/http'
 require 'pp'
 module Xiaonei
   class Service
-    DEBUG = false
+    DEBUG = true
     
     def post(params)
       pp "### Posting Params: #{params.inspect}" if DEBUG

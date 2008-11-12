@@ -13,8 +13,12 @@ SnsMyActivity.find(:all, :conditions => [" share = true  " ],:order => " updated
 			#												:notification => content)
 			puts "--------title:#{title.chars}-----content:#{content.chars}---------"
 				res_feed = notice.sns_user.xn_session.invoke_method("xiaonei.feed.publishTemplatizedAction", 
-																:title_data => "{\"title\":\"#{title}\"}",
-																:body_data => "{\"content\":\"#{content}\"}",
+																:title_data => { 
+																:title => title
+														        }.to_json, 
+																:body_data => { 
+																:content => content
+														        }.to_json, 
 																:template_id => 1)
 			puts "#{current_time}: process user #{notice.sns_user.id}:  #{res_feed.inspect} "
 			
