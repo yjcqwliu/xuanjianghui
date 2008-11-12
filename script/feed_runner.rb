@@ -6,7 +6,7 @@ SnsMyActivity.find(:all, :conditions => [" share = true  " ],:order => " updated
    if notice.activity
 	   title = notice.activity.act_subject
 	   if notice.activity.act_text
-			content = notice.activity.act_text.act_description[0,20].gsub("\n","")
+			content = notice.activity.act_text.act_description[0,100].gsub("\n","")
 	   
 			#res_note = notice.sns_user.xn_session.invoke_method("xiaonei.notifications.send", 
 			#												:to_ids => notice.to_xid, 
