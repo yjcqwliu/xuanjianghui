@@ -3,7 +3,7 @@
  <div class="event_search">
 						<form method="get" action="home">
 
-							<input type="hidden" value="searchEvent" name="d" />
+							<input type="hidden" value="<%= @act_location %>" name="location" />
 							<input type="text" autocomplete="off" id="keywords"
 								name="keywords" class="search_event" />
 							<input name="" type="image" class="search_new_btn"
@@ -34,9 +34,8 @@
 <div id="oak" class="gray clearfix">
 						<div id="event_left">
 							<div class="pager-top">
-								<span>共 <strong><%= @activity.length %></strong>
-									个活动</span>
-								
+								<span>共 <strong><%= @activity.total_entries %></strong>
+									个活动</span>								
 							</div>
 
 										<%= render(:partial => "partylist", :collection => @activity )%>

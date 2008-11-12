@@ -65,7 +65,7 @@ class HomeController < ApplicationController
 		end
 	end
 	def find_location_in_activity(tmp_params)
-	       tmp_arr = [" start_time > ? ", Time.now]
+	       tmp_arr = [" calendar_id in (1684,1685,1688,1691,1690,1695,1724,1692, 1693,1696,1712,1736,1728,1687,1732,1689,1716,1720,1686,1694,94318) and start_time > ? ", Time.now]
 		   if ! tmp_params[:act_location].blank?
 		       tmp_arr[0] += " and act_location = ? "
                tmp_arr << tmp_params[:act_location]
