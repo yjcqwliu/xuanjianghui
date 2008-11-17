@@ -59,7 +59,7 @@
 				   if @my_activity && @my_activity.join %>
 				         我已经关注了，<%= link_to "我不想关注了", :controller => :event, :action => :unjoin, :id => partylist.id %>
 				   <% else %>
-					   <%= link_to "我要关注", :controller => :event, :action => :join, :id => partylist.id %> | 
+					        <input type="button" onclick="set_join(<%= partylist.id %>)" value="我要关注" > | 
 					   <% if @my_activity && @my_activity.interest %>
 					        <%= link_to "我不感兴趣了", :controller => :event, :action => :uninterest, :id => partylist.id %>
 					   <% else %>

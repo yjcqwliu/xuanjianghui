@@ -54,15 +54,42 @@ class EventController < ApplicationController
 	def join
         if id = params[:id] 
 		      my_activity = @current_user.my_activity_find_by_id(id)
+			  awoketime = params[:awoketime].to_i
+			  mailbox = params[:mailbox]
 		      if my_activity
 			       my_activity.join = true
 				   my_activity.save
 			  else   
 			       @current_user.sns_my_activity.create(:activity_id =>id,:join => true)
 			  end
+			  @current_user.mailbox = params[:mailbox] if params[:mailbox]
+			  @current_user.save
 			  @activity = Activity.find(id)
-			  if !MailReminding.find(:first,:conditions =>["activity_id = ? and user_id =?",id, @current_user.id])  #如果邮件提醒中没有该信息则添加
-			   	MailReminding.create(:activity_id => id,:title => @activity.act_subject, :user_id => @current_user.id)
+			  mail = MailReminding.find(:first,:conditions =>["activity_id = ? and user_id =?",id, @current_user.id])  #如果邮件提醒中没有该信息则添加
+			  if mail
+			  		mail.activity_id = id
+					mail.title = @activity.act_subject
+					mail.user_id = @current_user.id
+					mail.link = "http://www.iease.com.cn/events/#{id}"
+					mail.start_time =  @activity.start_time
+					mail.end_time =  @activity.end_time
+					mail.remind_time =  @activity.start_time - awoketime.hour
+					mail.done = 0
+					mail.mailbox = mailbox
+					mail.act_subject = act_subject
+			  else
+			   		MailReminding.create(
+					:activity_id => id,
+					:title => @activity.act_subject, 
+					:user_id => @current_user.id,
+					:link => "http://www.iease.com.cn/events/#{id}",
+					:start_time =>  @activity.start_time,
+					:end_time =>  @activity.end_time,
+					:remind_time =>  @activity.start_time - awoketime.hour,
+					:done => 0,
+					:mailbox => mailbox,
+					:act_subject => @activity.act_subject
+					)
 			  end
 		end
 		xn_redirect_to("event/show/#{id}")

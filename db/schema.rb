@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081110155537) do
+ActiveRecord::Schema.define(:version => 20081115175614) do
 
   create_table "act_texts", :force => true do |t|
     t.integer "activity_id"
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(:version => 20081110155537) do
     t.string   "act_location", :limit => 50
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "mailbox"
   end
 
   add_index "sns_users", ["xid"], :name => "index_sns_users_on_xid"
