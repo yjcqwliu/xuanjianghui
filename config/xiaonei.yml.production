@@ -1,5 +1,0 @@
-production:
-  api_key: da6ff44401f244f4af44b8b003d690c5 
-  secret_key: 0c7d99469adb4d2d977a99ab9bc968f3 
-  canvas_page_name: xuanjianghui
-  callback_url: http://58.215.65.224:4200
