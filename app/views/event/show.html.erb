@@ -3,6 +3,7 @@
 			<div class="clearfix">
 				<div >
 			<div>
+   
        <div class="grayheader clearfix">
         <div class="left_side">
           <h2> <%= @activity.act_subject %> </h2>
@@ -30,7 +31,9 @@
             <h3> 活动介绍 </h3>
             <div class="boxcont">
               <div class="description">
-                 <span id="gut_display"> <% if @activity.act_text %><%#= truncate(h(@activity.act_text.act_description.chars),400).gsub("\n","<br>")%><% end %></span></br>
+			  
+                 <span id="gut_display"> <% if @activity.act_text %><%= truncate(h(@activity.act_text.act_description.chars),400).gsub("\n","<br>")%><% end %></span></br>
+				 
                   <span id="to_show_more" ><a href="http://www.iease.com.cn/events/<%= @activity.id %>" target="_blank">查看详情</a></span>
               </div>
             </div>
