@@ -1,4 +1,4 @@
-function seeOtherCity(){   //选择查看其他城市
+function seeOtherCity(){  
     var city_dialog;	
 	function go_url_callback(){
        var city = document.getElementById('select_city').getValue();
@@ -21,7 +21,7 @@ function seeOtherCity(){   //选择查看其他城市
     
     city_dialog.show();
 }
-function set_join(event_id){   //选择查看其他城市
+function set_join(event_id){ 
     var join_dialog;	
 	function go_url_callback(){
 		mailboxvalue = document.getElementById('mailbox').getValue();
@@ -65,8 +65,4 @@ function chgunivright(){
 }
 function reply_message(xid,commit_id){
 	document.getElementById('commit[reply_xid]').setValue(xid);
-	
-	//rname = document.getElementById('message'+commit_id).getValue();
-	//new Dialog(Dialog.DIALOG_ALERT, 'message'+commit_id, rname);
-	//document.getElementById('commit[content]').setValue("回复"+rname+"：");
 }
