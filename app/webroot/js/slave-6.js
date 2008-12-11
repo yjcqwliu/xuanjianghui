@@ -4,7 +4,7 @@ function buyslave(slaveuid)
 	{
 		return false;
 	}
-        openWindow('/slave/buy_dialog.php?slaveuid='+slaveuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '购买奴隶');
+        openWindow('../../slave/buy_dialog/'+slaveuid+'?rand='+Math.random(), 460, 460, '购买奴隶');
 }
 
 function freeslave(slaveuid)
@@ -13,12 +13,12 @@ function freeslave(slaveuid)
 	{
 		return false;
 	}
-        openWindow('/slave/free_dialog.php?slaveuid='+slaveuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '释放奴隶');
+        openWindow('../../slave/free_dialog?slaveuid='+slaveuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '释放奴隶');
 }
 
 function freeself()
 {
-	openWindow('/slave/freeself_dialog.php?verify='+g_verify+'&rand='+Math.random(), 460, 460, '我要赎身');
+	openWindow('../../slave/freeself_dialog?verify='+g_verify+'&rand='+Math.random(), 460, 460, '我要赎身');
 }
 
 function discountslave(slaveuid)
@@ -27,7 +27,7 @@ function discountslave(slaveuid)
 	{
 		return false;
 	}
-        openWindow('/slave/discount_dialog.php?slaveuid='+slaveuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '打折处理');
+        openWindow('../../slave/discount_dialog?slaveuid='+slaveuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '打折处理');
 }
 
 function painslave(slaveuid)
@@ -36,7 +36,7 @@ function painslave(slaveuid)
 	{
 		return false;
 	}
-        openWindow('/slave/pain_dialog.php?slaveuid='+slaveuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '整奴隶');
+        openWindow('../../slave/pain_dialog?slaveuid='+slaveuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '整奴隶');
 }
 
 function comfortslave(slaveuid)
@@ -45,7 +45,7 @@ function comfortslave(slaveuid)
 	{
 		return false;
 	}
-        openWindow('/slave/comfort_dialog.php?slaveuid='+slaveuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '安抚奴隶');
+        openWindow('../../slave/comfort_dialog?slaveuid='+slaveuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '安抚奴隶');
 }
 
 function fawnHost(hostuid)
@@ -54,12 +54,12 @@ function fawnHost(hostuid)
 	{
 		return false;
 	}
-        openWindow('/slave/fawn_dialog.php?hostuid='+hostuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '讨好主人');
+        openWindow('../../slave/fawn_dialog?hostuid='+hostuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '讨好主人');
 }
 
 function sysmsg()
 {
-        openWindow('/slave/set_sysmsg.php?verify='+g_verify+'&rand='+Math.random(), 460, 460, '设置');
+        openWindow('../../slave/set_sysmsg?verify='+g_verify+'&rand='+Math.random(), 460, 460, '设置');
 }
 
 function giveslave(slaveuid)
@@ -68,12 +68,12 @@ function giveslave(slaveuid)
 	{
 		return false;
 	}
-        openWindow('/slave/give_dialog.php?slaveuid='+slaveuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '赠送奴隶');
+        openWindow('../../slave/give_dialog?slaveuid='+slaveuid+'&verify='+g_verify+'&rand='+Math.random(), 460, 460, '赠送奴隶');
 }
 
 function selslave()
 {
-        openWindow('/slave/selslave_dialog.php?verify='+g_verify+'&rand='+Math.random(), 460, 460, '可买奴隶');
+        openWindow('../../slave/selslave_dialog?verify='+g_verify+'&rand='+Math.random(), 460, 460, '可买奴隶');
 }
 
 function invite()
@@ -95,16 +95,7 @@ function refresh(url)
 		{
 			url = url.substr(0 , length-1);
 		}
-		
-		var lastpos = url.lastIndexOf("&_lgmode=pri");
-		if(url.substr(lastpos , 12) == "&_lgmode=pri")
-		{
-			window.location.href = url;
-		}
-		else
-		{
-			window.location.href= url+'&_lgmode=pri';
-		}
+		window.location.href = url;
 		
 	}
 	else

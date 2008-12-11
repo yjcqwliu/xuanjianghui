@@ -44,3 +44,6 @@ h3.wdzr{width:285px; padding:5px 0 0 23px; border-bottom:solid 1px #7f93bc; heig
 .dealings_help{width:650px; padding-left:20px; color:#333; margin-top:-10px;}
 .dealings_help h3{font-size:12px; margin:0px; padding:10px 0;}
 .dealings_help p{font-size:13px; line-height:100%; text-indent:26px; margin:0px; padding:5px 0;}
+.rbs1{border:1px solid #d7e7fe; float:left;}
+.rb1-12,.rb2-12{height:23px; color:#fff; font-size:12px; background:#355582; padding:3px 5px; border-left:1px solid #fff; border-top:1px solid #fff; border-right:1px solid #6a6a6a; border-bottom:1px solid #6a6a6a; cursor:pointer;}
+.rb2-12{background:#355582;}

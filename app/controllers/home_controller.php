@@ -1,13 +1,14 @@
 <?php
 class HomeController extends AppController {
- var $uses = array('User','Friends','Userinfo');
- var $helpers = array('link');
+	var $uses = array('User','Friends','Userinfo');
+	var $components = array('Cookie','RequestHandler');
+	var $helpers = array('link','Javascript');
 	#var $name = 'Home2';
 	function beforeFilter()
 	{
 		$this->login();
 	}
-	function index() {
+	function me() {
 		#$this->set('users',$this->AppFriendsellUser->findall());
 		 #$this->set('users', $this->AppFriendsellUser->find('all'));
 		 #$this->test();\
@@ -15,17 +16,45 @@ class HomeController extends AppController {
 		 #echo serialize($this->current_user);
 		 #echo serialize($this->current_user);
 		 #echo "---current_user_id :".$this->current_user->id;
-		 if($_GET["id"])
-		 {
-		 	echo $_GET["id"];
-		 	$this->user = $this->User->find_by_uid($_GET["id"]);
-		 	$this->set('user',$this->user);
-		 }
-		 else
-		 {
-			$this->set('user',$this->current_user);
-		 }
+		 $this->set('user',$this->current_user);
 		 $this->set('current_user',$this->current_user);
+		 if(!empty($this->user['User']['master_id']))
+			{
+				$this->master_user = $this->User->find_by_uid($this->user['User']['master_id']);
+				$this->set('master_user',$this->master_user);
+		 	}
+		 $slave_user = $this->User->slave($this->current_user["User"]["tongju_users_id"]);
+		 $this->set('slave_user',$slave_user);
+		 if(isset($this->current_user["userinfo"]['user_gender']) && $this->current_user["userinfo"]['user_gender'] == 2)
+			{
+				$this->set('gender',"她");
+			}
+			else
+			{
+				$this->set('gender',"他");
+			}
+
+	}
+	function friend($uid)
+	{
+		if($uid)
+		 {
+		 	$this->user = $this->User->find_or_create_by_uid($uid);
+			if(!empty($this->user['User']['master_id']))
+			{
+				$this->master_user = $this->User->find_by_uid($this->user['User']['master_id']);
+				$this->set('master_user',$this->master_user);
+		 	}
+			$this->set('user',$this->user);
+			if(isset($this->user["userinfo"]['user_gender']) && $this->user["userinfo"]['user_gender'] == 2)
+			{
+				$this->set('gender',"她");
+			}
+			else
+			{
+				$this->set('gender',"他");
+			}
+		 }
 	}
 	function friendlist(){
 		$data = array();
