@@ -1,0 +1,21 @@
+/* CSS Document */
+
+/* header css */
+#header{ width:980px; height:auto; margin:0 auto; position:relative; } 
+#TextNav{ width:980px; height:27px; margin-bottom:5px; margin-top:5px;}
+#header h1{width:980px; height:30px; line-height:30px; text-align:right;}
+#header h1 a{padding:0 6px;}
+#SosoArea{ width:978px; height:30px;border:solid 1px #96BCE1; background-color:#E9F8FF; float:left;}
+#SosoArea ul{ width:978px; float:left; line-height:21px;}
+#SosoArea ul li{ float:left; padding:5px 0px 0 0px; }
+#SosoArea ul li a{ padding:0 10px 0 10px;}
+.in{ width:204px; height:18px; border:solid 1px #97BCE1; background-color:#fff; padding-right:5px;}
+#SosoArea ul li.p_A{ width:220PX;}
+#SosoArea ul li.li{ float:right;}
+#SosoArea ul li.lia{ padding-right:20px;}
+#SosoArea ul li span{color:#0076A3;}
+#SosoArea ul li.li span{ margin-right:18px; color:#0076A3;}
+
+#TopNav{ width:978px; height:94px;border:solid 1px #96BCE1; margin-top:5px; float:left;}
+#logo{ float:left; padding:2px 0 0 2px;}
+#Banners{ float:left; padding:2px 0 0 2px;}

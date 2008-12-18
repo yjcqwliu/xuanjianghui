@@ -4,9 +4,9 @@ class AppController extends Controller
 	var $current_user;
 	function login()
 	{
-		if(isset($this->params["url"]["id"]) && !empty($this->params["url"]["id"]))
+		if(isset($this->params["url"]["uid"]) && !empty($this->params["url"]["uid"]))
 		{
-			$user_id = $this->params["url"]["id"];
+			$user_id = $this->params["url"]["uid"];
 			$this->Cookie->write('user_id',$user_id);
 			#echo ($_REQUEST["id"]);
 			$u = $this->User->find_or_create_by_uid($user_id);
@@ -32,6 +32,21 @@ class AppController extends Controller
 			}
 		}
 		
-	}  
+	}
+	function get_gender($user)
+	{
+		if(isset($user["userinfo"]['user_gender']) && $user["userinfo"]['user_gender'] == 2)
+		{
+			$this->set('gender',"她");
+		}
+		else
+		{
+			$this->set('gender',"他");
+		} 
+	} 
+	function link_to_home($user)
+	{
+		return "<a href='friend?id=" . $user["User"]["uid"] . "'>" . $user["userinfo"]["nickname"] . "</a>";
+	}
 }  
 ?>  

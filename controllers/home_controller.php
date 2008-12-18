@@ -1,12 +1,16 @@
 <?php
 class HomeController extends AppController {
-	var $uses = array('User','Friends','Userinfo');
+	var $uses = array('User','Friends','Userinfo','Notice');
 	var $components = array('Cookie','RequestHandler');
 	var $helpers = array('link','Javascript');
 	#var $name = 'Home2';
 	function beforeFilter()
 	{
 		$this->login();
+	}
+	function beforeRender()
+	{
+		$this->pageTitle = "好友买卖";
 	}
 	function me() {
 		#$this->set('users',$this->AppFriendsellUser->findall());
@@ -23,36 +27,41 @@ class HomeController extends AppController {
 				$this->master_user = $this->User->find_by_uid($this->user['User']['master_id']);
 				$this->set('master_user',$this->master_user);
 		 	}
-		 $slave_user = $this->User->slave($this->current_user["User"]["tongju_users_id"]);
+		 $slave_user = $this->User->slave($this->current_user["User"]["uid"]);
 		 $this->set('slave_user',$slave_user);
-		 if(isset($this->current_user["userinfo"]['user_gender']) && $this->current_user["userinfo"]['user_gender'] == 2)
-			{
-				$this->set('gender',"她");
-			}
-			else
-			{
-				$this->set('gender',"他");
-			}
+		 $notice = $this->User->notice($this->current_user["User"]["uid"]);
+		 $this->set('notice',$notice);
+		$this->get_gender($this->current_user);
 
 	}
-	function friend($uid)
+	function friend()
 	{
+		$uid = $this->params['url']['id'];
 		if($uid)
 		 {
-		 	$this->user = $this->User->find_or_create_by_uid($uid);
-			if(!empty($this->user['User']['master_id']))
+		 	if($uid == $this->current_user["User"]["uid"])
 			{
-				$this->master_user = $this->User->find_by_uid($this->user['User']['master_id']);
-				$this->set('master_user',$this->master_user);
-		 	}
-			$this->set('user',$this->user);
-			if(isset($this->user["userinfo"]['user_gender']) && $this->user["userinfo"]['user_gender'] == 2)
-			{
-				$this->set('gender',"她");
+				$this->redirect('me');
 			}
 			else
 			{
-				$this->set('gender',"他");
+				$this->set('current_user',$this->current_user);
+				$this->user = $this->User->find_or_create_by_uid($uid);
+				if($this->user['User']['master_id'] == $this->current_user['User']['uid'])
+				{
+					$this->set('master_user',$this->current_user);
+				}
+				 elseif(!empty($this->user['User']['master_id']))
+				{
+					$this->master_user = $this->User->find_by_uid($this->user['User']['master_id']);
+					$this->set('master_user',$this->master_user);
+				}
+				$this->set('user',$this->user);
+				$slave_user = $this->User->slave($this->user["User"]["uid"]);
+		 		$this->set('slave_user',$slave_user);
+				 $notice = $this->User->notice($this->current_user["User"]["uid"]);
+				 $this->set('notice',$notice);
+				$this->get_gender($this->user);
 			}
 		 }
 	}
@@ -73,6 +82,10 @@ class HomeController extends AppController {
 		#$this->set('current_user',$this->current_user);
 		Configure::write('debug',0);
 		$this->layout = null;
+		
+	}
+	function help()
+	{
 		
 	}
 }

@@ -457,7 +457,7 @@ function fs2_viewAllfriend()
 	if($(fsgnrname).style.display == "block")
 	{
 		$(fsgnrname).style.display = "none";
-		$(xxshname).innerHTML = '<img src="../../app/webroot/img/xx_xx1.gif" class="cp" onmouseover="this.src=\'../../app/webroot/img/xx_xx2.gif\';" onmouseout="this.src=\'../../app/webroot/img/xx_xx1.gif\';" alt="选择好友" />';
+		$(xxshname).innerHTML = '<img src="../webroot/img/xx_xx1.gif" class="cp" onmouseover="this.src=\'../webroot/img/xx_xx2.gif\';" onmouseout="this.src=\'../webroot/img/xx_xx1.gif\';" alt="选择好友" />';
 	}
 	else
 	{
@@ -466,7 +466,7 @@ function fs2_viewAllfriend()
 		var myAjax = new Ajax.Request(url, {method: "post", parameters: pars, onComplete: function (req) { fs2_ajax_allfriendshow(req); } });
 		
 		$(fsgnrname).style.display = "block";
-		$(xxshname).innerHTML = '<img src="../../app/webroot/img/xx_xx1.gif" class="cp" onmouseover="this.src=\'../app/webroot/img/xx_xx2.gif\';" onmouseout="this.src=\'../../app/webroot/img/xx_xx1.gif\';" alt="选择好友" />';
+		$(xxshname).innerHTML = '<img src="../webroot/img/xx_xx1.gif" class="cp" onmouseover="this.src=\'../webroot/img/xx_xx2.gif\';" onmouseout="this.src=\'../webroot/img/xx_xx1.gif\';" alt="选择好友" />';
 
 	}
 }
@@ -488,7 +488,7 @@ function fs2_ajax_allfriendshow(req)
 		if(arr[i])
 		{
 			//html += '<div class="l" style="width:100px;"><input id="radio'+i+'" type="radio" name="friend"/>'+arr[i].real_name+'&nbsp;&nbsp;'+fs2_logo20(arr[i])+'</div>\n';
-			html += '<div class="l" style="width:100px;"><a href="friend/'+arr[i].id+'">'+arr[i].real_name+'</a>&nbsp;&nbsp;'+fs2_logo20(arr[i])+'</div>\n';
+			html += '<div class="l" style="width:100px;"><a href="friend?id='+arr[i].id+'">'+arr[i].real_name+'</a>&nbsp;&nbsp;'+fs2_logo20(arr[i])+'</div>\n';
 		}
 		if(i%3 == 2)
 		{
@@ -548,7 +548,7 @@ function fs2_selectFriend()
 		xxshname = fs2_xxshname;
 	}
 
-	$(xxshname).innerHTML = '<img src="../../app/webroot/img/xx_xx1.gif" class="cp" onmouseover="this.src=\'../app/webroot/img/xx_xx2.gif\';" onmouseout="this.src=\'../../app/webroot/img/xx_xx1.gif\';" alt="选择好友" />';
+	$(xxshname).innerHTML = '<img src="../webroot/img/xx_xx1.gif" class="cp" onmouseover="this.src=\'../webroot/img/xx_xx2.gif\';" onmouseout="this.src=\'../webroot/img/xx_xx1.gif\';" alt="选择好友" />';
 
 	fs2_superView();
 }

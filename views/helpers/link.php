@@ -1,8 +1,14 @@
 <?php
 class LinkHelper extends AppHelper {
-    function show_userpic($pic_data, $size=0) {
-		$pic = split("\|",$pic_data);
-		return $this->output($pic[$size]);
+    function show_userpic($pic_data=null, $size=0) {
+		if(!empty($pic_data))
+		{
+			$pic = split("\|",$pic_data);
+			if(isset($pic[$size]))
+				return $this->output($pic[$size]);
+			else
+				return $this->output($pic[0]);
+		}
     }
 }
 

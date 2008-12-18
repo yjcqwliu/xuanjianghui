@@ -10,39 +10,39 @@
 	<div class="f14 tac "><b>你现在有现金 <strong class="dgreen">&yen;<?= $mymoney ?></strong> 。</b></div>
 	<div class="c9" style="width:200px;margin:5px auto;">
 		<?php
-		if($user["User"]["last_price"]) 
+		if($user["User"]["last_price"] && $user["User"]["master_id"]) 
 		{?>
-		<div class="l" style="width:90px;">他的上次身价</div>
+		<div class="l" style="width:90px;"><?= $gender ?>的上次身价</div>
 		<div class="l tar"style="width:100px;"><strong class="dgreen">&yen;<?= $user["User"]["last_price"] ?></strong></div>
 		<div class="c"></div>
 		
-		<div class="l" style="width:90px;">原主人收益</div><div class="l tar"style="width:100px;"><strong class="dgreen">&yen;105</strong></div><div class="c"></div>
+		<div class="l" style="width:90px;">原主人收益</div><div class="l tar"style="width:100px;"><strong class="dgreen">&yen;<?= $up_price * 0.7 ?></strong></div><div class="c"></div>
 		
-		<div class="l" style="width:90px;">他的收益</div>
-		<div class="l tar"style="width:100px;"><strong class="dgreen">&yen;30</strong></div>
+		<div class="l" style="width:90px;"><?= $gender ?>的收益</div>
+		<div class="l tar"style="width:100px;"><strong class="dgreen">&yen;<?= $up_price * 0.2 ?></strong></div>
 		<div class="c"></div>
 		<?php 
 		}
 		?>
 		<div class="l" style="width:90px;">人口交易印花税</div>
-		<div class="l tar"style="width:100px;"><strong class="dgreen">&yen;15</strong></div>
+		<div class="l tar"style="width:100px;"><strong class="dgreen">&yen;<?= $up_price * 0.1 ?></strong></div>
 		<div class="c" style=""></div>
 		<div style="border-top:1px solid #ccc;height:4px;"></div>
-		<div class="l" style="width:90px;margin-top:0px !important;margin-top:-10px;">他的现在身价</div>
+		<div class="l" style="width:90px;margin-top:0px !important;margin-top:-10px;"><?= $gender ?>的现在身价</div>
 		<div class="l tar"style="width:100px;margin-top:0px !important;margin-top:-10px;"><strong class="dred">&yen;<?= $user["User"]["sell_price"] ?></strong></div>
 		<div class="c"></div>
 		
 	</div>
 	
-	<div class="f12 l mt15 " style="padding-left:110px;">给他起个绰号：</div>
+	<div class="f12 l mt15 " style="padding-left:110px;">给<?= $gender ?>起个绰号：</div>
 	<div class="l mt15"><span class="it_s"><input type="text" name="nick" value="" class="it1" onfocus="this.className='it2';" onblur="this.className='it1';" style="width:10em;" maxlength="8"></span></div>
 	<div class="c"></div>
-	<input type="hidden" name="slaveuid" value="<?= $user["User"]["tongju_users_id"] ?>">
+	<input type="hidden" name="slaveuid" value="<?= $user["User"]["uid"] ?>">
 
 	
 <div style="padding:10px 150px;">
 	<div class="rbs1">
-		<input name="submit" type="submit" value="立即购买他" class="rb1-12" onmouseover="this.className='rb2-12';" onmouseout="this.className='rb1-12';" style="padding:2px 15px;" /></div>
+		<input name="submit" type="submit" value="立即购买<?= $gender ?>" class="rb1-12" onmouseover="this.className='rb2-12';" onmouseout="this.className='rb1-12';" style="padding:2px 15px;" /></div>
 </div>
 </form>
 

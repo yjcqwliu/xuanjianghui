@@ -1,0 +1,14 @@
+/* CSS Document */
+
+/* global css */
+*{padding:0px; margin:0px;}
+a { color: #393939; text-decoration: none; }
+a:hover{ text-decoration: underline;  }
+body{margin:0px; padding: 0; text-align: left; font:12px "ËÎÌו"; }
+div, td, table, ul, li, ol, dd, dl,dt {margin:0; padding:0;}
+h1,h2,h3,h4,h5,h6{ font-size: 12px; font-weight: normal; }
+html{ width: 100%; margin: auto; }
+img, img a, img a:hover{ border: none; }
+ul, ol{list-style: none;}
+input,select{font-size:12px;line-height:16px;}
+
