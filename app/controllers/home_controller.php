@@ -93,9 +93,9 @@ class HomeController extends AppController {
 	function order()
 	{
 		
-		if(isset($_GET["order"]))
+		if(isset($_GET["myorder"]))
 		{
-			$order_by = $_GET["order"];
+			$order_by = $_GET["myorder"];
 		}
 		else
 			$order_by = "sell_price";
@@ -131,7 +131,7 @@ class HomeController extends AppController {
 		}
 		if(!empty($friends))
 		{
-			$slave_user = $this->User->find("all",array("conditions" =>" 1 = 1 " .$wide_in_condition . $gender_condition,"order"=>$order_by." desc"));
+			$slave_user = $this->User->find("all",array("conditions" =>" 1 = 1 " .$wide_in_condition . $gender_condition,"order"=>$order_by." desc","limit"=> 10));
 			$this->set("slave_user",$slave_user);
 			
 			

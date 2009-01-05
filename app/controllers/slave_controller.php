@@ -9,7 +9,6 @@ class SlaveController extends AppController {
 	var $done_fawn = array("7"=>"称颂他的才华","5"=>"称颂他的魅力","4"=>"给他捶背","3"=>"给他揉腿","2"=>"给他剪指甲","1"=>"给他请安");
 	function beforeFilter()
 	{
-		Configure::write('debug',3);
 		$this->login();
 	}
 	function get_slave($slaveuid)
