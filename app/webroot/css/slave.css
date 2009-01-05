@@ -36,8 +36,8 @@ h3.wdzr{width:285px; padding:5px 0 0 23px; border-bottom:solid 1px #7f93bc; heig
 .ph_area{padding:10px 0 10px 15px;}
 .ph_area img{border:0px; padding-right:2px;}
 	.ph_area p{width:147px; height:26x; margin:0px 0; padding:5px 0 5px 8px; font-size:13px; color:#369;}
-.ph_area p.pbg{background:url(http://img.kaixin001.com.cn/i/slave/pbg.gif) no-repeat; height:26px; width:155px; font-weight:bold;}
-.ph_area p.pbg0{background:url(/i/slave/pbg0.gif) no-repeat; margin:0px 0; padding:5px 0 5px 8px; font-size:13px; color:#369;}
+.ph_area p.pbg{background:url(../../../img/pbg.gif) no-repeat; height:26px; width:155px; font-weight:bold;}
+.ph_area p.pbg0{background:url(../../../img/pbg0.gif) no-repeat; margin:0px 0; padding:5px 0 5px 8px; font-size:13px; color:#369;}
 .ph_list{width:570px; padding:0 0 3px 5px; border-bottom:solid 1px #d8dfea; margin-bottom:10px;}
 .ph_list2{width:570px; padding:5px 0 10px 5px; border-bottom:solid 1px #d8dfea; margin-bottom:10px;}
 

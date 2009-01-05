@@ -11,7 +11,7 @@
 		<?php echo $form->create(array('action'=>'free')); ?>
 		<input type="hidden" name="slaveuid" value="<?= $user["User"]["uid"]?>">
 		<div style="padding:20px 146px;">
-			<div class="rbs1" ><input  name="submit" class="rb1-12" onmouseover="this.className='rb2-12';" onmouseout="this.className='rb1-12';" type="submit" value="立即释放<?= $slave["User"]["gender"] ?>"  style="padding:4px 15px;" /></div>
+			<div class="rbs1" ><input  name="submit" class="rb1-12" onmouseover="this.className='rb2-12';" onmouseout="this.className='rb1-12';" type="submit" value="立即释放<?= $user["User"]["gender"] ?>"  style="padding:4px 15px;" /></div>
 		</div>
 		</form>
 		

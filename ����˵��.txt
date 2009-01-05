@@ -1,0 +1,30 @@
+配置文件说明
+需要配置的文件
+friendsell/app/config/database.php  数据库配置
+friendsell/app/config/core.php	核心配置
+
+
+database.php需修改内容
+
+var $default = array(   'driver' => 'mysql',
+		'persistent' => false,
+		'host' => 'localhost',				*数据库服务器路径
+		'port' => '',   
+		'login' => 'root',				*数据库用户名
+		'password' => '',				*数据库密码
+		'database' => 'app_cn920',			*数据库名称
+		'schema' => '',  
+		'prefix' => '',  
+		'encoding' => 'utf8'
+	   );
+
+core.php可选配置内容
+
+Configure::write('debug',0);               *默认值为0 意思为运行状态，屏蔽所有错误，建议在配置的时候调成3（调试模式，但运行速度比较慢），配置无误后再调成0
+
+
+
+配置好以后访问如下路径
+比如friendsell放在根目录，则访问
+http://localhost/friendsell/app/index.php/home/me?uid=1
+（说明：如果服务器支持mod_rewrite则可以访问http://localhost/friendsell/home/me?uid=1）

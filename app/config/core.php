@@ -40,7 +40,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug',0);
+	Configure::write('debug',3);
 /**
  * Application wide charset encoding
  */
@@ -227,5 +227,5 @@
  */
 	Cache::config('default', array('engine' => 'File'));
 	#Configure::write('Security.salt', 'pl345e-P45s_7h3*S@l7!');
-	#Configure::write('App.baseUrl', env('SCRIPT_NAME'));
+	Configure::write('App.baseUrl', env('SCRIPT_NAME'));
 ?>

@@ -30,5 +30,13 @@ class SellLog extends AppModel
 		else
 			return 0;
 	}
+	function get_pain_count($fuid,$tuid)
+	{
+		$sell_log = $this->find(' fuid = '.$fuid .' and tuid = '. $tuid);
+		if(!empty($sell_log))
+			return $sell_log['SellLog']['pain_count'];
+		else
+			return 0;
+	}
 }
 ?>

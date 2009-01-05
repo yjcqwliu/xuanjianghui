@@ -30,37 +30,38 @@
 <div id="logo"><a href="#"><?= $html->image('match/logo_03.gif',array("width"=>"225"))?></a></div>
 <div id="Banners"><a href="#"><?= $html->image('match/banner.gif',array("width"=>"747"))?></a></div>
 </div>
-</div>
+
 
 			<?php $session->flash(); ?>
-<div id="match_main">
-<div id="Market_right">
-<div class="m2 wr1">
-    <div id="r2_2">
-		  <div id="r3">
-			<div class="l"><?php echo $html->image('ico_mm.gif', array('align' => 'absmiddle'))?> 
-			<b class="f14">游戏：朋友买卖</b>
+		<div id="match_main">
+		<div id="Market_right">
+		<div class="m2 wr1">
+			<div id="r2_2">
+				  <div id="r3">
+					<div class="l"><?php echo $html->image('ico_mm.gif', array('align' => 'absmiddle'))?> 
+					<b class="f14">游戏：朋友买卖</b>
+					</div>
+					<!--div class="r"><a href="javascript:window.history.back();" class="sl">&lt;&lt;返回上一页</a></div-->
+					<div class="c"></div>
 			</div>
-			<!--div class="r"><a href="javascript:window.history.back();" class="sl">&lt;&lt;返回上一页</a></div-->
-			<div class="c"></div>
-	</div>
-	<div> <div class="deal_nav">
-			<div class="deal_navbg">
-				<h4 class="sy"><?= $html->link('首页', array('controller' => 'home','action' => 'me'),array('class' => 'sl2'))?></h4>	
+			<div> <div class="deal_nav">
+					<div class="deal_navbg">
+						<h4 class="sy"><?= $html->link('首页', array('controller' => 'home','action' => 'me'),array('class' => 'sl2'))?></h4>	
+					</div>
+					<div class="deal_navbg">
+						<h4 class="ph"><?= $html->link('排行', array('controller' => 'home','action' => 'order'),array('class' => 'sl2'))?></h4>
+					</div>
+					<div class="deal_navbg" style="margin-right:0px;">
+						<h4 class="help"><?= $html->link('帮助', array('controller' => 'home','action' => 'help'),array('class' => 'sl2'))?></h4>
+					</div>
+					<div class="c"></div>
+				 </div>
 			</div>
-			<div class="deal_navbg">
-				<h4 class="ph"><?= $html->link('排行', array('controller' => 'home','action' => 'order'),array('class' => 'sl2'))?></h4>
+					<?php echo $content_for_layout; ?>
 			</div>
-			<div class="deal_navbg" style="margin-right:0px;">
-				<h4 class="help"><?= $html->link('帮助', array('controller' => 'home','action' => 'help'),array('class' => 'sl2'))?></h4>
-			</div>
-			<div class="c"></div>
-		 </div>
-	</div>
-			<?php echo $content_for_layout; ?>
-	</div>
-</div>
-</div>
+		</div>
+		</div>
+		</div>
 </div>
 	<div class="c"></div>	
 	<?php echo $cakeDebug; ?>

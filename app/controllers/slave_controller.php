@@ -6,9 +6,10 @@ class SlaveController extends AppController {
 	var $layout = "dialog";
 	var $done_pain = array("1"=>"在冰冷小黑屋关一天","2"=>"痛扁一顿","3"=>"饿一天不给饭吃","4"=>"在大街上当马骑","6"=>"罚去黑煤窑挖煤","7"=>"罚去扫厕所","16"=>"倒插门给芙蓉大姐","18"=>"罚去挑大粪","21"=>"拿鞭子抽","22"=>"罚跪半天搓衣板");
 	var $done_comfort = array("1"=>"泡菊花茶","7"=>"穿漂亮的新衣服","2"=>"吃西餐","3"=>"去公园散步");
+	var $done_fawn = array("7"=>"称颂他的才华","5"=>"称颂他的魅力","4"=>"给他捶背","3"=>"给他揉腿","2"=>"给他剪指甲","1"=>"给他请安");
 	function beforeFilter()
 	{
-		Configure::write('debug',0);
+		Configure::write('debug',3);
 		$this->login();
 	}
 	function get_slave($slaveuid)
@@ -64,10 +65,12 @@ class SlaveController extends AppController {
 	}
 	function free_dialog($slaveuid)
 	{
-		$user =  $this->get_slave($slaveuid);
-		#Debugger::dump($this->current_user);
-		$this->set("user",$user);
-		$this->set("mymoney",$this->current_user["publicinfo"]["money"]);
+		$slaveuser =  $this->get_slave($slaveuid);
+		if($slaveuser["User"]["pain_updated_at"] <= date("Y-m-d H:i"))
+		{
+			$this->set("user",$slaveuser);
+			$this->set("mymoney",$this->current_user["publicinfo"]["money"]);
+		}
 	}
 	function freeself_dialog()
 	{
@@ -75,6 +78,7 @@ class SlaveController extends AppController {
 	}
 	function discount_dialog($slaveuid)
 	{
+		$slaveuser =  $this->get_slave($slaveuid);
 		$this->set("slaveuser",$slaveuser);
 	}
 	function pain_dialog($slaveuid)
@@ -109,8 +113,30 @@ class SlaveController extends AppController {
 			$this->render('alert');
 		}
 	}
-	function fawn_dialog()
+	function fawn_dialog($masterid)
 	{
+		$masteruser = $this->User->find_by_uid($masterid);
+		if($this->current_user["User"]["master_id"] == $masteruser["User"]["uid"])
+		{
+			if($slaveuser["User"]["fawn_updated_at"] <= date("Y-m-d H:i"))
+			{
+				$this->set("user",$masteruser);
+				$this->set("done_fawn",$this->done_fawn);
+			}
+			else
+			{
+				$this->set('notice',$masteruser['userinfo']['nickname']."才被你讨好过，过会再来吧");
+				$this->render('alert');
+			}
+		}
+		else
+		{
+			$this->set('notice',$slaveuser["userinfo"]["nickname"] . "不是你的主人，你无法进行操作");
+			$this->render('alert');
+			exit;
+		}
+		
+		
 	}
 	function set_sysmsg()
 	{
@@ -120,7 +146,7 @@ class SlaveController extends AppController {
 	}
 	function selslave_dialog()
 	{
-		$slaveusers = $this->User->findall(" User.uid in (".$this->current_user["User"]["friend_ids"].") and User.sell_price < ".$this->current_user["publicinfo"]["money"]." and User.master_id != ".$this->current_user["User"]["uid"]);
+		$slaveusers = $this->User->findall(" User.uid in (".$this->current_user["User"]["friend_ids"].") and User.sell_price <= ".$this->current_user["publicinfo"]["money"]." and User.master_id <> ".$this->current_user["User"]["uid"]);
 		$this->set('slaveusers',$slaveusers);
 	}
 	function alert()
@@ -145,57 +171,69 @@ class SlaveController extends AppController {
 				$slaveuser = $this->User->find_by_uid($slaveuid);
 				if($this->current_user['publicinfo']['money'] >= $slaveuser['User']['sell_price'])
 				{
-					$this->current_user['publicinfo']['money'] -= $slaveuser['User']['sell_price'];
-					$this->Publicinfo->save($this->current_user['publicinfo'],false,array('money'));
-					$up_price = $this->User->up_price($slaveuser['User']['sell_price']);
-					if(!empty($slaveuser["User"]["master_id"]))//买之前他已经有主人了
+					if($slaveuser["User"]["pain_updated_at"] <= date("Y-m-d H:i"))
 					{
-						$master_user = $this->User->find_by_uid($slaveuser["User"]["master_id"]);
-						$master_user['publicinfo']['money'] += $slaveuser['User']['last_price'] + $up_price * 0.7;
-						$this->Publicinfo->save($master_user['publicinfo'],false,array('money'));
-						$slaveuser['publicinfo']['money'] += $up_price * 0.2;
-						$this->Publicinfo->save($slaveuser['publicinfo'],false,array('money'));
 						
-						$notice_data["from_uid"] = $this->current_user["User"]["uid"];
-						$notice_data["to_uid"] = $slaveuser["User"]["uid"];
-						$notice_data["who_uid"] = $master_user["User"]["uid"];
-						$notice_data["content"] = $this->link_to_home($this->current_user) . "把" . $this->link_to_home($slaveuser) . "从" . $this->link_to_home($master_user) ."的手里以¥" . $slaveuser['User']['sell_price'] . "买走";
-						if(!empty($nick))
-							$notice_data["content"] .="，起个绰号叫“" . $nick . "”";
-						$this->Notice->save($notice_data);
+						$this->current_user['publicinfo']['money'] -= $slaveuser['User']['sell_price'];
+						$this->Publicinfo->save($this->current_user['publicinfo'],false,array('money'));
+						$up_price = $this->User->up_price($slaveuser['User']['sell_price']);
+						if(!empty($slaveuser["User"]["master_id"]))//买之前他已经有主人了
+						{
+							$master_user = $this->User->find_by_uid($slaveuser["User"]["master_id"]);
+							$master_user['publicinfo']['money'] += $slaveuser['User']['last_price'] + $up_price * 0.7;
+							$this->Publicinfo->save($master_user['publicinfo'],false,array('money'));
+							$slaveuser['publicinfo']['money'] += $up_price * 0.2;
+							$this->Publicinfo->save($slaveuser['publicinfo'],false,array('money'));
+							
+							$notice_data["from_uid"] = $this->current_user["User"]["uid"];
+							$notice_data["to_uid"] = $slaveuser["User"]["uid"];
+							$notice_data["who_uid"] = $master_user["User"]["uid"];
+							$notice_data["content"] = $this->link_to_home($this->current_user) . "把" . $this->link_to_home($slaveuser) . "从" . $this->link_to_home($master_user) ."的手里以¥" . $slaveuser['User']['sell_price'] . "买走";
+							if(!empty($nick))
+								$notice_data["content"] .="，起个绰号叫“" . $nick . "”";
+							$this->Notice->save($notice_data);
+						}
+						else
+						{
+							$notice_data["from_uid"] = $this->current_user["User"]["uid"];
+							$notice_data["who_uid"] = $slaveuser["User"]["uid"];
+							$notice_data["content"] =    $this->link_to_home($slaveuser) . "被" . $this->link_to_home($this->current_user) . "以¥" . $slaveuser['User']['sell_price'] . "的身价买为奴隶";
+							if(!empty($nick))
+								$notice_data["content"] .="，起个绰号叫“" . $nick . "”";
+							$this->Notice->save($notice_data);
+						}	
+						$slaveuser = $this->init_user_data($slaveuser);
+						$slaveuser['User']['last_price'] = $slaveuser['User']['sell_price'];
+						$slaveuser['User']['sell_updated_at'] = date("Y-m-d H:i:s");
+						$slaveuser['User']['last_sell'] = "花了<span class='dgreen'><strong>&yen;" .  $slaveuser['User']['sell_price'] . "</strong></span>购买";
+						
+						$slaveuser['User']['sell_price'] += $up_price;
+						$slaveuser['User']['master_id'] = $this->current_user['User']['uid'];
+						$slaveuser['User']['master_nickname'] = $this->current_user['userinfo']['nickname'];
+						$slaveuser['User']['nickname'] = $nick;
+						
+						//如果用户的奴隶数超过10个，那么就自动赎身
+						if($this->current_user["User"]["slave_count"] >= 9)
+						{
+							$this->current_user = $this->over_ten_slave($this->current_user);
+						}						
+						$this->User->save($slaveuser);
+						if(isset($master_user))
+							$this->User->save($master_user);
+						$this->User->save($this->current_user);
+						
+						$this->SellLog->add_sell_log($this->current_user['User']['uid'],$slaveuser['User']['uid'],1);
+						
+						
+						$notice = '<strong><span class="sl">'. $slaveuser['userinfo']['nickname']. '</span>已经成为你的奴隶。<br />同时，'.$slaveuser["User"]["gender"] .'的身价涨到<strong class="dgreen">&yen;'. $slaveuser['User']['sell_price'] .'</strong></strong>';
+						$this->set('notice',$notice);
+						$this->render('alert_refresh');
 					}
 					else
 					{
-						$notice_data["from_uid"] = $this->current_user["User"]["uid"];
-						$notice_data["who_uid"] = $slaveuser["User"]["uid"];
-						$notice_data["content"] =    $this->link_to_home($slaveuser) . "被" . $this->link_to_home($this->current_user) . "以¥" . $slaveuser['User']['sell_price'] . "的身价买为奴隶";
-						if(!empty($nick))
-							$notice_data["content"] .="，起个绰号叫“" . $nick . "”";
-						$this->Notice->save($notice_data);
-					}	
-					$slaveuser['User']['last_price'] = $slaveuser['User']['sell_price'];
-					$slaveuser['User']['sell_updated_at'] = date("Y-m-d H:i:s");
-					$slaveuser['User']['last_sell'] = "花了<span class='dgreen'><strong>&yen;" .  $slaveuser['User']['sell_price'] . "</strong></span>购买";
-					
-					$slaveuser['User']['sell_price'] += $up_price;
-					$slaveuser['User']['master_id'] = $this->current_user['User']['uid'];
-					$slaveuser['User']['master_nickname'] = $this->current_user['userinfo']['nickname'];
-					$slaveuser['User']['nickname'] = $nick;
-					
-					
-											
-					$this->User->save($slaveuser);
-					if(isset($master_user))
-						$this->User->save($master_user);
-					$this->User->save($this->current_user);
-					
-					$this->SellLog->add_sell_log($this->current_user['User']['uid'],$slaveuser['User']['uid'],1);
-					
-					
-					$notice = '<strong><span class="sl">'. $slaveuser['userinfo']['nickname']. '</span>已经成为你的奴隶。<br />同时，'.$slaveuser["User"]["gender"] .'的身价涨到<strong class="dgreen">&yen;'. $slaveuser['User']['sell_price'] .'</strong></strong>';
-					$this->set('notice',$notice);
-					$this->render('alert_refresh');
-				
+						$this->set('notice',$user['userinfo']['nickname']."正在".$user['User']['status']."，过会再来吧");
+						$this->render('alert');
+					}
 					
 				}
 				else
@@ -215,19 +253,21 @@ class SlaveController extends AppController {
 		{
 			$slaveuid = $_POST["slaveuid"];
 			$slaveuser = $this->get_slave($slaveuid);
-				
 			$this->current_user['publicinfo']['money'] += $slaveuser['User']['last_price'] / 2;
-			$slaveuser['User']['sell_price'] == $slaveuser['User']['last_price'] / 2;
-			$slaveuser['User']['master_id'] = null;
-			$slaveuser['User']['master_nickname'] = null;
-			$slaveuser['User']['nickname'] = '';
-			$this->User->save($slaveuser,false,array('sell_price','master_id','nickname'));
 			$this->Publicinfo->save($this->current_user['publicinfo'],false,array('money'));
-			$this->User->save($this->current_user);
+			$this->free_done($slaveuser);
 			$notice = "你把" . $slaveuser['userinfo']['nickname'] . "成功的释放掉了";
 			$this->set('notice',$notice);
 			$this->render('alert_refresh');
 		}
+	}
+	private function free_done($slaveuser)
+	{
+		
+		$slaveuser['User']['sell_price'] == $slaveuser['User']['last_price'] / 2;
+		$slaveuser = $this->init_user_data($slaveuser);
+		$this->User->save($slaveuser,false,array('sell_price','master_id','nickname','pain_updated_at','comfert_updated_at'));
+		$this->User->save($this->current_user);
 	}
 	function discount()
 	{
@@ -240,6 +280,7 @@ class SlaveController extends AppController {
 			{
 				$slaveuser['User']['sell_price'] = (int)($slaveuser['User']['sell_price'] * $discount * 0.1);
 				$this->User->save($slaveuser,false,array('sell_price'));
+				$this->User->save($this->current_user);
 				$notice = "<span class=\"sl\">" . $slaveuser['userinfo']['nickname']."</span>被你打折以后，身价降到了<strong class=\"dgreen\">&yen;" . $slaveuser['User']['sell_price'] . "</strong>";
 				$this->set('notice',$notice);
 				$this->render('alert_refresh');
@@ -260,36 +301,71 @@ class SlaveController extends AppController {
 			$slaveuser = $this->get_slave($slaveuid);
 			if($slaveuser["User"]["pain_updated_at"] <= date("Y-m-d H:i"))
 			{
-				$paintype = $_POST["paintype"];
-				$updated_at = getdate();
-				switch($paintype) 
-				{ 
-					case "1": 
-						$still_hour = 24;
-						$notice = $this->link_to_home($this->current_user) . "花了<strong class=\"dgreen\">&yen;1000</strong>把<span class=\"sl\">" . $this->link_to_home($slaveuser)."</span>关在冰冷小黑屋里一整天";
-						$status_string = "被主人关在冰冷的小黑屋";
-						$this->current_user['publicinfo']['money'] -= 1000;
-						$this->Publicinfo->save($this->current_user['publicinfo'],false,array('money'));
-						$this->User->save($this->current_user);
-						break;
-					default:
-						$still_hour = 3;
-						$notice = $this->link_to_home($slaveuser)."被" .$this->link_to_home($this->current_user). $this->done_pain[$paintype];
-						$status_string = "被主人".$this->done_pain[$paintype];
-						
+				if($this->SellLog->get_pain_count($this->current_user['User']['uid'],$slaveuser['User']['uid']) >= 1)
+				{
+					$this->free_done($slaveuser);
+					$notice = $this->link_to_home($slaveuser)."终于不堪忍受残酷的折磨，从".$this->link_to_home($this->current_user)."的魔掌里逃了出去";
+					$notice_data["from_uid"] = $this->current_user["User"]["uid"];
+					$notice_data["to_uid"] = $slaveuser["User"]["uid"];
+					$notice_data["content"] = $notice;
+					$this->Notice->save($notice_data);
+					$this->SellLog->add_sell_log($this->current_user['User']['uid'],$slaveuser['User']['uid'],0,-1);
 				}
-				$updated_at = $updated_at["year"]."-".$updated_at["mon"]."-".$updated_at["mday"]." ".($updated_at["hours"]+$still_hour).":".$updated_at["minutes"];
-				$slaveuser['User']['pain_type'] = $paintype;
-				$slaveuser['User']['pain_updated_at'] = $updated_at;
-				$slaveuser['User']['status'] = $status_string;
-				$this->User->save($slaveuser,false,array('pain_type','pain_updated_at','status'));
+				else
+				{		
+					$this->SellLog->add_sell_log($this->current_user['User']['uid'],$slaveuser['User']['uid'],0,1);
 				
-				$notice_data["from_uid"] = $this->current_user["User"]["uid"];
-				$notice_data["to_uid"] = $slaveuser["User"]["uid"];
-				$notice_data["content"] = $notice;
-				$this->Notice->save($notice_data);
+					$paintype = $_POST["paintype"];
+					$updated_at = getdate();
+					switch($paintype) 
+					{ 
+						case "1": 
+							if($this->current_user['publicinfo']['money'] >= 1000)
+							{
+								$still_hour = 24;
+								$notice = $this->link_to_home($this->current_user) . "花了<strong class=\"dgreen\">&yen;1000</strong>把<span class=\"sl\">" . $this->link_to_home($slaveuser)."</span>关在冰冷小黑屋里一整天";
+								$status_string = "被主人关在冰冷的小黑屋";
+								$this->current_user['publicinfo']['money'] -= 1000;
+								$this->Publicinfo->save($this->current_user['publicinfo'],false,array('money'));
+								$this->User->save($this->current_user);
+							}
+							else
+								$notice = "你的现金不够<strong class=\"dgreen\">&yen;1000</strong>";
+							break;
+						case "6":
+							if($this->current_user['publicinfo']['money'] >= 100)
+							{
+								$still_hour = 3;
+								$rand_money = rand(100,300);
+								$notice = $this->link_to_home($this->current_user) . "交了<strong class=\"dgreen\">&yen;100</strong>中介费给黑煤窑主，把<span class=\"sl\">" . $this->link_to_home($slaveuser)."</span>罚去黑煤窑挖煤3小时，总共赚了<strong class=\"dgreen\">&yen;".$rand_money."</strong>";
+								$status_string = "被主人罚去黑煤窑挖煤";
+								$this->current_user['publicinfo']['money'] -= $rand_money - 100;
+								$this->Publicinfo->save($this->current_user['publicinfo'],false,array('money'));
+								$this->User->save($this->current_user);
+							}
+							else
+								$notice = "你的现金不够<strong class=\"dgreen\">&yen;1000</strong>";
+							break;
+						default:
+							$still_hour = 3;
+							$notice = $this->link_to_home($slaveuser)."被" .$this->link_to_home($this->current_user). $this->done_pain[$paintype];
+							$status_string = "被主人".$this->done_pain[$paintype];
 							
-				$this->SellLog->add_sell_log($this->current_user['User']['uid'],$slaveuser['User']['uid'],0,1);
+							
+							
+					}
+					$updated_at = $updated_at["year"]."-".$updated_at["mon"]."-".$updated_at["mday"]." ".($updated_at["hours"]+$still_hour).":".$updated_at["minutes"];
+					$slaveuser['User']['pain_type'] = $paintype;
+					$slaveuser['User']['pain_updated_at'] = $updated_at;
+					$slaveuser['User']['status'] = $status_string;
+					$this->User->save($slaveuser,false,array('pain_type','pain_updated_at','status'));
+					
+					$notice_data["from_uid"] = $this->current_user["User"]["uid"];
+					$notice_data["to_uid"] = $slaveuser["User"]["uid"];
+					$notice_data["content"] = $notice;
+					$this->Notice->save($notice_data);
+				}	
+				
 				
 				$this->set('notice',$notice);
 				$this->render('alert_refresh');
@@ -306,28 +382,36 @@ class SlaveController extends AppController {
 		if(!empty($this->current_user["User"]["master_id"]))
 		{
 			if($this->current_user["publicinfo"]["money"] >= $this->current_user["User"]["sell_price"])
+			{
+				if($slaveuser["User"]["pain_updated_at"] <= date("Y-m-d H:i"))
 				{
-				$this->current_user["publicinfo"]["money"] -= $this->current_user["User"]["sell_price"];
-				$this->Publicinfo->save($this->current_user['publicinfo'],false,array('money'));
+					$this->current_user["publicinfo"]["money"] -= $this->current_user["User"]["sell_price"];
+					$this->Publicinfo->save($this->current_user['publicinfo'],false,array('money'));
+					
+					$master_user = $this->User->find_by_uid($this->current_user["User"]["master_id"]);
+					$master_user['publicinfo']['money'] += $this->current_user["User"]["sell_price"];
+					$this->Publicinfo->save($master_user['publicinfo'],false,array('money'));
+					
+					$this->current_user = $this->init_user_data($this->current_user);
+					$this->current_user["User"]["freeself_updated_at"] = date("Y-m-d H:i:s");
+					$this->User->save($this->current_user);
+					$this->User->save($master_user);
+					
+					$notice_data["from_uid"] = $this->current_user["User"]["uid"];
+					$notice_data["to_uid"] = $master_user["User"]["uid"];
+					$notice_data["content"] =    $this->link_to_home($this->current_user) . "花了¥" .$this->current_user['User']['sell_price']."把自己从".$this->link_to_home($master_user)."的手上赎下来";
+					$this->Notice->save($notice_data);
+					
+					$notice = "恭喜你成为了自由身";
+					$this->set('notice',$notice);
+					$this->render('alert_refresh');
+				}
+				else
+				{
+					$this->set('notice',"你正在".$user['User']['status']."，过会再来吧");
+					$this->render('alert');
+				}
 				
-				$master_user = $this->User->find_by_uid($this->current_user["User"]["master_id"]);
-				$master_user['publicinfo']['money'] += $this->current_user["User"]["sell_price"];
-				$this->Publicinfo->save($master_user['publicinfo'],false,array('money'));
-				
-				$this->current_user["User"]["master_id"] = null;
-				$this->current_user['User']['master_nickname'] = null;
-				$this->current_user["User"]["freeself_updated_at"] = date("Y-m-d H:i:s");
-				$this->User->save($this->current_user);
-				$this->User->save($master_user);
-				
-				$notice_data["from_uid"] = $this->current_user["User"]["uid"];
-				$notice_data["to_uid"] = $master_user["User"]["uid"];
-				$notice_data["content"] =    $this->link_to_home($this->current_user) . "花了¥" .$this->current_user['User']['sell_price']."把自己从".$this->link_to_home($master_user)."的手上赎下来";
-				$this->Notice->save($notice_data);
-				
-				$notice = "恭喜你成为了自由身";
-				$this->set('notice',$notice);
-				$this->render('alert_refresh');
 			}
 			else
 			{
@@ -396,11 +480,91 @@ class SlaveController extends AppController {
 			}
 		}
 	}
-	
-	
-	
-	
-	
+	function fawn()
+	{
+		if(isset($_POST["slaveuid"]))
+		{
+			$slaveuid = $_POST["slaveuid"];
+			$masteruser = $this->User->find_by_uid($masterid);
+			if($this->current_user["User"]["master_id"] == $masteruser["User"]["uid"])
+			{
+				if($slaveuser["User"]["fawn_updated_at"] <= date("Y-m-d H:i"))
+				{
+					$comforttype = $_POST["fawntype"];
+					$updated_at = getdate();
+					switch($comforttype) 
+					{ 
+						case "1": 
+							$still_hour = 3;
+							$notice = "天热又干燥，".$this->link_to_home($this->current_user)."不辞辛劳亲自给奴隶".$this->link_to_home($slaveuser)."泡了杯菊花茶解渴";
+							break;
+						case "2":
+							$still_hour =3;
+							$notice = $this->link_to_home($this->current_user)."把".$this->link_to_home($slaveuser)."带到一家高雅的西餐厅，在浪漫的烛光中共进晚餐";
+							break;
+						case "3":
+							$still_hour = 3;
+							$notice = "傍晚微风徐徐，主人".$this->link_to_home($this->current_user)."带着".$this->link_to_home($slaveuser)."到公园里散步，美丽的夕阳投射出两人修长的身影";
+							break;
+						case "7":
+							$still_hour = 3;
+							$notice = $this->link_to_home($this->current_user)."给".$this->link_to_home($slaveuser)."穿上漂亮的新衣服";
+							break;
+						default:
+							$still_hour = 3;
+							$notice = $this->link_to_home($slaveuser)."给" .$this->link_to_home($this->current_user). $this->done_pain[$paintype];
+							
+					}
+					$updated_at = $updated_at["year"]."-".$updated_at["mon"]."-".$updated_at["mday"]." ".($updated_at["hours"]+$still_hour).":".$updated_at["minutes"];
+					$slaveuser['User']['comforttype'] = $comforttype;
+					$slaveuser['User']['comfort_updated_at'] = $updated_at;
+					$this->User->save($slaveuser,false,array('comforttype','comfort_updated_at'));
+					
+					$notice_data["from_uid"] = $this->current_user["User"]["uid"];
+					$notice_data["to_uid"] = $slaveuser["User"]["uid"];
+					$notice_data["content"] = $notice;
+					$this->Notice->save($notice_data);
+					
+					$this->SellLog->add_sell_log($this->current_user['User']['uid'],$slaveuser['User']['uid'],0,0,1);
+						
+					$this->set('notice',$notice);
+					$this->render('alert_refresh');
+				}
+				else
+				{
+					$this->set('notice',$slaveuser['userinfo']['nickname']."才被你安抚过，过会再来吧");
+					$this->render('alert');
+				}
+			}
+		}
+	}
+	private function init_user_data($user)
+	{
+		$user["User"]["master_id"] = null;
+		$user['User']['master_nickname'] = null;
+		$user['User']['nickname'] = null;
+		$user['User']['pain_updated_at'] = null;
+		$user['User']['comfert_updated_at'] = null;
+		$user['User']['status'] = null;
+		return $user;
+	}
+	private function over_ten_slave($user)
+	{
+		$master_user = $this->User->find_by_uid($user["User"]["master_id"]);
+		if(!empty($master_user))
+		{
+		
+			$user = $this->init_user_data($user);
+			$this->User->save($user);
+			$notice_data["from_uid"] = $user["User"]["uid"];
+			$notice_data["to_uid"] = $master_user["User"]["uid"];
+			$notice_data["who_uid"] = null;
+			$notice_data["content"] =$this->link_to_home($user)."已经拥有的10个奴隶，系统自动帮".$user["User"]["gender"]."从".$this->link_to_home($master_user)."手上赎身了";
+			$this->Notice->save($notice_data);
+			$this->User->save($master_user);
+		}
+		return $user;
+	}
 	
 	
 	

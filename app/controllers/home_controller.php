@@ -58,7 +58,7 @@ class HomeController extends AppController {
 				$this->set('user',$this->user);
 				$slave_user = $this->User->slave($this->user["User"]["uid"]);
 		 		$this->set('slave_user',$slave_user);
-				 $notice = $this->User->notice($this->current_user["User"]["uid"]);
+				 $notice = $this->User->notice($this->user["User"]["uid"]);
 				 $this->set('notice',$notice);
 			}
 		 }
@@ -92,23 +92,57 @@ class HomeController extends AppController {
 	}
 	function order()
 	{
-		$friends = $this->current_user["User"]["friend_ids"];
-		if(isset($_GET["type"]))
+		
+		if(isset($_GET["order"]))
 		{
-			$order_by = $_GET["type"];
+			$order_by = $_GET["order"];
 		}
 		else
 			$order_by = "sell_price";
+		if(isset($_GET["gender"]))
+		{
+			$gender = $_GET["gender"];
+			if($gender == "girl")
+				$gender_condition = " and User.gender ='她'";
+			elseif($gender == "boy")
+				$gender_condition = " and User.gender ='他'";
+			else
+				$gender_condition = null;
+		}
+		else
+		{
+			$gender = "all";
+			$gender_condition = null;
+		}
+			
+		$friends = $this->current_user["User"]["friend_ids"];
+		if(isset($_GET["wide_in"]))
+		{
+			$wide_in = $_GET["wide_in"];
+			if($wide_in == "friend")
+				$wide_in_condition = "and User.uid in (".$friends.",".$this->current_user["User"]["uid"].") ";
+			else
+				$wide_in_condition = null;
+		}
+		else
+		{
+			$wide_in = "friend";
+			$wide_in_condition = " and User.uid in (".$friends.",".$this->current_user["User"]["uid"].") ";
+		}
 		if(!empty($friends))
 		{
-			$slave_user = $this->User->find("all",array("conditions" =>" User.uid in (".$friends.")","order"=>$order_by." desc"));
+			$slave_user = $this->User->find("all",array("conditions" =>" 1 = 1 " .$wide_in_condition . $gender_condition,"order"=>$order_by." desc"));
 			$this->set("slave_user",$slave_user);
-			$this->set("order",$order_by);
+			
+			
 		}
 		else
 		{
 			
 		}
+		$this->set("order",$order_by);
+		$this->set("gender",$gender);
+		$this->set("wide_in",$wide_in);
 	}
 }
 ?>

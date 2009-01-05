@@ -1,23 +1,23 @@
 <DIV class="ph_left">
 	   		<H3>排序</H3>
 			<DIV class="ph_area">
-				<P <? if($order == "sell_price"){?>class="pbg"<?}?> style="cursor:pointer;" onclick="javascript:window.location.href='order?type=sell_price';"><?=$html->image("px1.gif",array("alt"=>"身价最贵的","align"=>"absmiddle"))?> 身价最贵的</P>
-				<P <? if($order == "sell_updated_at"){?>class="pbg"<?}?> style="cursor:pointer;" onclick="javascript:window.location.href='order?type=sell_updated_at';" class=""><?=$html->image("px2.gif",array("alt"=>"最新被买","align"=>"absmiddle"))?> 最新被买</P>
-				<P onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" onclick="javascript:window.location.href='order?type=total_money';" class=""><?=$html->image("px3.gif",array("alt"=>"资产最多","align"=>"absmiddle"))?> 资产最多</P>
-				<P onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" onclick="javascript:window.location.href='order?type=money';"><?=$html->image("px4.gif",array("alt"=>"现金最多","align"=>"absmiddle"))?> 现金最多</P>
+				<P <? if($order == "sell_price"){?>class="pbg"<?}else{?>onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" <?}?> style="cursor:pointer;" onclick="javascript:window.location.href='order?order=sell_price&gender=<?= $gender ?>&wide_in=<?= $wide_in ?>';"><?=$html->image("px1.gif",array("alt"=>"身价最贵的","align"=>"absmiddle"))?> 身价最贵的</P>
+				<P <? if($order == "sell_updated_at"){?>class="pbg"<?}else{?>onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" <?}?> style="cursor:pointer;" onclick="javascript:window.location.href='order?order=sell_updated_at&gender=<?= $gender ?>&wide_in=<?= $wide_in ?>';" class=""><?=$html->image("px2.gif",array("alt"=>"最新被买","align"=>"absmiddle"))?> 最新被买</P>
+				<P <? if($order == "total_money"){?>class="pbg"<?}else{?>onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" <?}?> style="cursor:pointer;" onclick="javascript:window.location.href='order?order=total_money&gender=<?= $gender ?>&wide_in=<?= $wide_in ?>';" class=""><?=$html->image("px3.gif",array("alt"=>"资产最多","align"=>"absmiddle"))?> 资产最多</P>
+				<P <? if($order == "money"){?>class="pbg"<?}else{?>onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" <?}?> style="cursor:pointer;" onclick="javascript:window.location.href='order?order=money&gender=<?= $gender ?>&wide_in=<?= $wide_in ?>';"><?=$html->image("px4.gif",array("alt"=>"现金最多","align"=>"absmiddle"))?> 现金最多</P>
 			</DIV>
-			<!--H3>性别</H3>
+			<H3>性别</H3>
 			<DIV class="ph_area">
-				<P class="pbg" style="cursor:pointer;" onclick="javascript:window.location.href=&#39;/~slave/top.php?type=price&amp;gender=&amp;range=friend&#39;;"><IMG src="./朋友买卖 - 开心网2_files/px5.gif" alt="全部" align="absmiddle"> 全部</P>
-				<P onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" onclick="javascript:window.location.href=&#39;/~slave/top.php?type=price&amp;gender=1&amp;range=friend&#39;;"><IMG src="./朋友买卖 - 开心网2_files/px6.gif" alt="女奴隶" align="absmiddle"> 女奴隶</P>
-				<P onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" onclick="javascript:window.location.href=&#39;/~slave/top.php?type=price&amp;gender=0&amp;range=friend&#39;;"><IMG src="./朋友买卖 - 开心网2_files/px7.gif" alt="男奴隶" align="absmiddle"> 男奴隶</P>
+				<P <? if($gender == "all"){?>class="pbg"<?}else{?>onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" <?}?> style="cursor:pointer;" onclick="javascript:window.location.href='order?order=<?= $order ?>&gender=all&wide_in=<?= $wide_in ?>';"><?=$html->image("px5.gif",array("alt"=>"全部","align"=>"absmiddle"))?> 全部</P>
+				<P <? if($gender == "girl"){?>class="pbg"<?}else{?>onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" <?}?> style="cursor:pointer;" onclick="javascript:window.location.href='order?order=<?= $order ?>&gender=girl&wide_in=<?= $wide_in ?>';"><?=$html->image("px6.gif",array("alt"=>"女奴隶","align"=>"absmiddle"))?> 女奴隶</P>
+				<P <? if($gender == "boy"){?>class="pbg"<?}else{?>onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" <?}?> style="cursor:pointer;" onclick="javascript:window.location.href='order?order=<?= $order ?>&gender=boy&wide_in=<?= $wide_in ?>';"><?=$html->image("px7.gif",array("alt"=>"男奴隶","align"=>"absmiddle"))?> 男奴隶</P>
 			</DIV-->
-			<!--H3>范围</H3>
+			<H3>范围</H3>
 			<DIV class="ph_area">
-				<P class="pbg" style="cursor:pointer;" onclick="javascript:window.location.href=&#39;/~slave/top.php?type=price&amp;gender=&amp;range=friend&#39;;"><IMG src="./朋友买卖 - 开心网2_files/friend.gif" alt="仅好友" align="absmiddle"> 仅好友</P>
-				<P onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" onclick="javascript:window.location.href=&#39;/~slave/top.php?type=price&amp;gender=&amp;range=all&#39;;"><IMG src="./朋友买卖 - 开心网2_files/all_people.gif" alt="所有人" align="absmiddle"> 所有人</P>
+				<P <? if($wide_in == "friend"){?>class="pbg"<?}else{?>onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" <?}?> style="cursor:pointer;" onclick="javascript:window.location.href='order?order=<?= $order ?>&gender=<?= $gender ?>&wide_in=friend';"><?=$html->image("friend.gif",array("alt"=>"仅好友","align"=>"absmiddle"))?> 仅好友</P>
+				<P <? if($wide_in == "all_people"){?>class="pbg"<?}else{?>onmouseover="this.className=&quot;pbg0&quot;;" onmouseout="this.className=&quot;&quot;;" style="cursor:pointer;" <?}?> style="cursor:pointer;" onclick="javascript:window.location.href='order?order=<?= $order ?>&gender=<?= $gender ?>&wide_in=all_people';"><?=$html->image("all_people.gif",array("alt"=>"所有人","align"=>"absmiddle"))?> 所有人</P>
 				
-			</DIV-->
+			</DIV>
 	   </DIV>
 	   
 <DIV class="ph_right">
